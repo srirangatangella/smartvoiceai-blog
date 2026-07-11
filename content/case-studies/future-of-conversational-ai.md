@@ -1,16 +1,7 @@
 ---
-title: The Future of Conversational AI and Voice Agents
-description: Evaluating the path to zero-latency reasoning, native audio model architectures, and multi-modal sales assistants.
-date: 2026-07-06
-author: Smart Voice AI
-category: Case Studies
-tags:
-  - Future Tech
-  - Voice AI
-  - Multi-modal
-  - Industry Trends
-image: https://images.unsplash.com/photo-1612444530582-fc66183b16f7?q=80&w=800&auto=format&fit=crop
-featured: false
+title: "The Future of Conversational AI and Voice Agents"
+date: "2026-07-06"
+description: "Evaluating the path to zero-latency reasoning, native audio model architectures, and multi-modal sales assistants."
 draft: false
 ---
 
