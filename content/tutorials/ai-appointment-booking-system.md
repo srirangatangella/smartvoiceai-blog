@@ -1,16 +1,7 @@
 ---
-title: How to Build an AI Appointment Booking System
-description: Tutorial on linking Vapi AI tool calls with Google Calendar API to schedule client slots on the phone.
-date: 2026-07-07
-author: Smart Voice AI
-category: Tutorials
-tags:
-  - Vapi
-  - Google Calendar
-  - API Tool Calls
-  - Nodejs
-image: https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&auto=format&fit=crop
-featured: false
+title: "How to Build an AI Appointment Booking System"
+date: "2026-07-07"
+description: "Tutorial on linking Vapi AI tool calls with Google Calendar API to schedule client slots on the phone."
 draft: false
 ---
 
