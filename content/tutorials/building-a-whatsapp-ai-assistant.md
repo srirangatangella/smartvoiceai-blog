@@ -1,16 +1,7 @@
 ---
-title: Building a WhatsApp AI Assistant Using Node.js
-description: Step-by-step tutorial on integrating the WhatsApp Cloud API with OpenAI's GPT-4o for automated customer conversations.
-date: 2026-07-08
-author: Smart Voice AI
-category: Tutorials
-tags:
-  - WhatsApp
-  - API
-  - Nodejs
-  - GPT-4o
-image: https://images.unsplash.com/photo-1501183638710-841dd1904471?q=80&w=2070
-featured: false
+title: "Building a WhatsApp AI Assistant Using Node.js"
+date: "2026-07-08"
+description: "Step-by-step tutorial on integrating the WhatsApp Cloud API with OpenAI's GPT-4o for automated customer conversations."
 draft: false
 ---
 
