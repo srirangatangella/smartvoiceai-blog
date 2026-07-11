@@ -8,7 +8,7 @@ import CtaBand from "@/components/CtaBand";
 import LeadForm from "@/components/LeadForm";
 
 export const metadata = buildMetadata({
-  title: "Website Voice Assistant — Add a Talking AI Agent to Your Site",
+  title: "Website Voice Assistant — Add a Talking AI Assistant to Your Site",
   description:
     "Embed a rich AI voice assistant on your website that greets visitors, answers questions by voice, captures leads, and books appointments — pushing every lead straight into your CRM. Free demo.",
   path: "/solutions/website-voice-assistant",
@@ -16,15 +16,15 @@ export const metadata = buildMetadata({
     "website voice assistant",
     "AI voice widget for website",
     "voice AI for website",
-    "embed voice agent website",
+    "embed voice assistant website",
     "conversational voice assistant",
   ],
 });
 
 const faqs = [
-  { q: "What is a website voice assistant?", a: "It's a voice-enabled AI agent embedded on your website. Visitors click to talk, and the agent answers their questions out loud, shows relevant info on screen, captures their details, and books appointments — a richer experience than a text chatbot." },
+  { q: "What is a website voice assistant?", a: "It's a voice-enabled AI assistant embedded on your website. Visitors click to talk, and it answers their questions out loud, shows relevant info on screen, captures their details, and books appointments — a richer experience than a text chatbot." },
   { q: "How do I add it to my site?", a: "We provide a lightweight embed snippet that drops into any website — including WordPress, Webflow, Shopify, or a custom build. We handle the configuration and integrations for you." },
-  { q: "Can it show things on screen while talking?", a: "Yes. Like our live demo, the agent can display floor plans, pricing, or product visuals on screen while it speaks — perfect for real estate and product showcases." },
+  { q: "Can it show things on screen while talking?", a: "Yes. Like our live demo, it can display floor plans, pricing, or product visuals on screen while it speaks — perfect for real estate and product showcases." },
   { q: "Where do the leads go?", a: "Straight into your CRM (HubSpot, Salesforce, GoHighLevel) or via webhook to any system, with a full transcript of the conversation." },
 ];
 

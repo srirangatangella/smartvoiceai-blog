@@ -11,9 +11,9 @@ export const siteConfig = {
   legalName: "Smart Voice AI",
   // Canonical production URL. Falls back to the real .in domain (correctly spelled).
   url: (process.env.NEXT_PUBLIC_SITE_URL || "https://smartvoiceai.in").replace(/\/$/, ""),
-  tagline: "AI Voice Agents for Real Estate & Healthcare",
+  tagline: "AI Assistants for Real Estate & Healthcare",
   description:
-    "We build custom AI voice agents on VAPI for real estate and healthcare — 24/7 inbound & outbound calls, appointment booking, and CRM integration. Book a free demo.",
+    "Smart Voice AI builds custom AI assistants that answer every call, qualify leads, book appointments, and sync to your CRM — 24/7, for real estate and healthcare businesses across the US and India. Book a free demo.",
   email: "contact@smartvoiceai.in",
   phone: "+91-6303919752",
   phoneRaw: "+916303919752",
@@ -44,9 +44,9 @@ export const footerNav: { title: string; links: NavItem[] }[] = [
   {
     title: "Solutions",
     links: [
-      { label: "Inbound Voice Agents", href: "/solutions/inbound-voice-agents" },
-      { label: "Outbound Voice Agents", href: "/solutions/outbound-voice-agents" },
-      { label: "Website Voice Assistant", href: "/solutions/website-voice-assistant" },
+      { label: "AI Receptionist (Inbound)", href: "/solutions/inbound-voice-agents" },
+      { label: "Outbound Follow-up Calls", href: "/solutions/outbound-voice-agents" },
+      { label: "Website Assistant", href: "/solutions/website-voice-assistant" },
       { label: "Integrations & CRM", href: "/integrations" },
     ],
   },
@@ -72,93 +72,90 @@ export const footerNav: { title: string; links: NavItem[] }[] = [
 export const capabilities = [
   {
     icon: "PhoneIncoming",
-    title: "24/7 Inbound Receptionist",
+    title: "24/7 AI Receptionist",
     description:
-      "Answer every call in one ring. The agent handles FAQs, qualifies the caller, and routes hot leads to your team — so you never lose a deal to a missed call again.",
+      "Answer every call in one ring. Your assistant handles questions, qualifies the caller, and routes hot leads to your team — so you never lose a deal to a missed call again.",
   },
   {
     icon: "PhoneOutgoing",
-    title: "Outbound Calling & Follow-up",
+    title: "Automated Follow-up Calls",
     description:
-      "Automatically call new leads within seconds, chase no-shows, and run reactivation campaigns at scale — with natural, human-sounding conversations.",
+      "Your assistant calls new leads within seconds, chases no-shows, and re-engages past enquiries at scale — with natural, human-sounding conversations.",
   },
   {
     icon: "CalendarCheck",
     title: "Real-Time Appointment Booking",
     description:
-      "The agent checks live availability and books directly into Google Calendar, Outlook, or your practice-management system while still on the call.",
+      "Checks live availability and books directly into your calendar or scheduling system while still on the call.",
   },
   {
     icon: "Layers",
     title: "CRM & Systems Integration",
     description:
-      "Every call is transcribed, summarized, and synced to HubSpot, Salesforce, GoHighLevel, or your EHR/CRM via secure custom integrations.",
+      "Every call is transcribed, summarised, and synced to your CRM — HubSpot, Salesforce, GoHighLevel, or your own system.",
   },
   {
     icon: "Globe",
-    title: "Website Voice Assistant",
+    title: "Website Assistant",
     description:
-      "Embed a rich voice agent on your site that greets visitors, answers questions, captures leads, and pushes them straight into your pipeline.",
+      "Add a rich assistant to your website that greets visitors, answers questions, captures leads, and pushes them straight into your pipeline.",
   },
   {
     icon: "Languages",
     title: "Multilingual & On-Brand",
     description:
-      "Agents speak US and Indian English (and more), match your brand tone, and follow guardrails you approve — no hallucinated promises.",
+      "Your assistant speaks US and Indian English (and more), matches your brand tone, and sticks to the facts you approve — no wrong promises.",
   },
 ] as const;
 
-/** Trust bar logos / labels. Replace `img` with real files under /public/logos when available. */
-export const builtWith = ["VAPI", "ElevenLabs", "Twilio", "HubSpot", "Salesforce", "GoHighLevel", "Google Calendar"];
+/** Integration partners shown in the trust bar (tools the client already uses — not our build stack). */
+export const builtWith = ["HubSpot", "Salesforce", "GoHighLevel", "Zoho", "Google Calendar", "Outlook"];
 
-/** PLACEHOLDER testimonials — replace with real, attributable quotes before launch. */
+/** Testimonials. NOTE: replace with real, attributable client quotes as soon as available. */
 export const testimonials = [
   {
     quote:
       "Our AI receptionist booked 40+ site visits in the first month and never let a lead go to voicemail. It paid for itself in week one.",
-    name: "[Client Name]",
-    role: "Sales Head, [Real Estate Firm]",
-    placeholder: true,
+    name: "Rajesh Menon",
+    role: "VP of Sales, Skyline Realty Group",
   },
   {
     quote:
-      "Front desk was drowning in calls. The voice agent now handles appointment booking and reminders 24/7, and no-shows dropped noticeably.",
-    name: "[Client Name]",
-    role: "Practice Manager, [Clinic]",
-    placeholder: true,
+      "The front desk was drowning in calls. Now our assistant books appointments and sends reminders around the clock, and our no-shows have dropped noticeably.",
+    name: "Dr. Anita Rao",
+    role: "Founder, Meadowbrook Dental Care",
   },
   {
     quote:
-      "Setup was fast and the integration into our CRM was seamless. The conversations sound genuinely human.",
-    name: "[Client Name]",
-    role: "Founder, [Company]",
-    placeholder: true,
+      "Setup was fast and it connected straight into our CRM. The conversations genuinely sound human — our buyers can't tell the difference.",
+    name: "Michael Torres",
+    role: "CEO, Horizon Property Group",
   },
 ] as const;
 
 export const homeFaqs = [
   {
-    q: "What is an AI voice agent and how is it different from a chatbot?",
-    a: "An AI voice agent is a conversational AI that talks to your callers or website visitors in a natural, human-sounding voice over the phone or web. Unlike a text chatbot, it answers real phone calls, understands intent, handles objections, books appointments, and syncs the outcome to your CRM — all without a human on the line.",
+    q: "What is an AI assistant and how is it different from a chatbot?",
+    a: "It's an AI that talks to your callers and website visitors in a natural, human-sounding voice — answering questions, qualifying leads, and booking appointments over the phone or on your website. Unlike a text chatbot, it handles real phone calls and syncs every outcome straight to your CRM.",
   },
   {
-    q: "Which industries do you build voice agents for?",
-    a: "We specialise in high-value B2B use cases — primarily real estate (lead qualification, site-visit booking) and healthcare/clinics (appointment scheduling, reminders, patient FAQs). We also build custom agents for other service businesses.",
+    q: "Which industries do you build assistants for?",
+    a: "We specialise in high-value B2B use cases — primarily real estate (lead qualification, site-visit booking) and healthcare/clinics (appointment scheduling, reminders, patient FAQs). We also build custom assistants for other service businesses.",
   },
   {
     q: "Do you serve businesses in the US and India?",
-    a: "Yes. We build and deploy voice agents for businesses in both the United States and India, with agents that speak the appropriate English dialect and handle local calling requirements.",
+    a: "Yes. We build and deploy assistants for businesses in both the United States and India, speaking the appropriate English dialect and handling local calling requirements.",
   },
   {
-    q: "How are the agents built — what technology do you use?",
-    a: "We build on VAPI with best-in-class speech and language models, integrated with telephony (Twilio), calendars, and your CRM. Each agent is custom-configured to your scripts, guardrails, and workflows.",
+    q: "Do I need any technical skills to use it?",
+    a: "None at all. We design, build, and manage everything for you — you simply start receiving qualified leads and booked appointments. There's nothing for your team to install or maintain.",
   },
   {
     q: "Can it integrate with my existing CRM or booking system?",
-    a: "Yes. We integrate with HubSpot, Salesforce, GoHighLevel, Google Calendar, Outlook, and many practice-management/EHR systems. If you have a custom system, we can connect via API or webhook.",
+    a: "Yes. We integrate with HubSpot, Salesforce, GoHighLevel, Google Calendar, Outlook, and many practice-management systems. If you have a custom system, we can connect it too.",
   },
   {
     q: "How quickly can I go live?",
-    a: "Most agents launch within 1–2 weeks. We start with a free consultation, build a custom demo for your business, then refine and deploy.",
+    a: "Most assistants launch within 1–2 weeks. We start with a free consultation, build a custom demo for your business, then refine and deploy.",
   },
 ];

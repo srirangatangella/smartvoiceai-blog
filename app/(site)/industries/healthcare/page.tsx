@@ -17,22 +17,22 @@ import CtaBand from "@/components/CtaBand";
 import LeadForm from "@/components/LeadForm";
 
 export const metadata = buildMetadata({
-  title: "AI Voice Agent for Healthcare & Clinics — Appointment Scheduling",
+  title: "AI Receptionist for Healthcare & Clinics — Appointment Scheduling",
   description:
-    "A privacy-first AI voice agent for clinics and hospitals that books and confirms appointments 24/7, reduces no-shows with reminders, and answers patient FAQs. Compliance-ready. Free demo.",
+    "A privacy-first AI assistant for clinics and hospitals that books and confirms appointments 24/7, reduces no-shows with reminders, and answers patient FAQs. Compliance-ready. Free demo.",
   path: "/industries/healthcare",
   keywords: [
-    "AI voice agent for healthcare",
+    "AI receptionist for healthcare",
     "AI answering service for medical clinic",
     "AI appointment scheduling for hospitals",
     "patient appointment booking AI",
-    "HIPAA compliant AI voice agent",
+    "HIPAA compliant AI assistant",
   ],
 });
 
 const faqs = [
   {
-    q: "How does an AI voice agent help clinics and hospitals?",
+    q: "How does an AI assistant help clinics and hospitals?",
     a: "It answers patient calls 24/7, books and reschedules appointments into your practice-management system, sends confirmation and reminder calls to cut no-shows, and answers common questions about hours, location, insurance, and services — freeing your front desk for in-person patients.",
   },
   {
@@ -45,7 +45,7 @@ const faqs = [
   },
   {
     q: "Will it reduce no-shows?",
-    a: "Automated confirmation and reminder calls consistently reduce no-shows, and the agent can offer to reschedule on the spot — recapturing slots that would otherwise be lost.",
+    a: "Automated confirmation and reminder calls consistently reduce no-shows, and it can offer to reschedule on the spot — recapturing slots that would otherwise be lost.",
   },
   {
     q: "Can it handle after-hours and overflow calls?",
@@ -67,10 +67,10 @@ export default function HealthcarePage() {
     <>
       <JsonLd
         data={serviceSchema({
-          name: "AI Voice Agents for Healthcare & Clinics",
+          name: "AI Assistants for Healthcare & Clinics",
           description: metadata.description as string,
           path: "/industries/healthcare",
-          serviceType: "Healthcare AI voice agent for appointment scheduling and patient communication",
+          serviceType: "Healthcare AI assistant for appointment scheduling and patient communication",
         })}
       />
       <Breadcrumbs items={[{ name: "Industries", path: "/industries/healthcare" }, { name: "Healthcare", path: "/industries/healthcare" }]} />
@@ -79,10 +79,10 @@ export default function HealthcarePage() {
         eyebrow="Healthcare & Clinics"
         title={
           <>
-            AI Voice Agent for <span className="gradient-text">Healthcare &amp; Clinics</span>
+            AI Assistant for <span className="gradient-text">Healthcare &amp; Clinics</span>
           </>
         }
-        description="Give every patient a fast, friendly answer — 24/7. Our privacy-first AI voice agent books and confirms appointments, cuts no-shows with reminders, and handles patient FAQs, so your front desk can focus on the people in the room."
+        description="Give every patient a fast, friendly answer — 24/7. Our privacy-first AI assistant books and confirms appointments, cuts no-shows with reminders, and handles patient FAQs, so your front desk can focus on the people in the room."
       />
 
       {/* Value split */}
@@ -91,7 +91,7 @@ export default function HealthcarePage() {
           <h2>Your front desk can&apos;t answer every call</h2>
           <p className="lead">
             Missed calls mean missed appointments and frustrated patients. Long hold times send them
-            to another provider. An AI voice agent picks up instantly, every time.
+            to another provider. An AI assistant picks up instantly, every time.
           </p>
           <ul className="benefit-list">
             <li><CheckCircle2 className="h-5 w-5" /> Book &amp; confirm appointments around the clock</li>
@@ -122,7 +122,7 @@ export default function HealthcarePage() {
       <section className="section">
         <div className="section-header">
           <span className="eyebrow">Use cases</span>
-          <h2>What your healthcare agent handles</h2>
+          <h2>What your healthcare assistant handles</h2>
         </div>
         <div className="grid-3">
           {useCases.map((u) => (
@@ -169,7 +169,7 @@ export default function HealthcarePage() {
         </p>
       </section>
 
-      <Faq faqs={faqs} title="Healthcare voice agent FAQs" />
+      <Faq faqs={faqs} title="Healthcare AI assistant FAQs" />
 
       {/* Lead form */}
       <section className="section" id="contact">
@@ -178,7 +178,7 @@ export default function HealthcarePage() {
             <span className="eyebrow" style={{ marginBottom: 18 }}>Get started</span>
             <h2 className="text-4xl font-bold leading-[1.1] mb-5">Free demo for your clinic</h2>
             <p className="text-lg text-gray-400 mb-8">
-              Tell us how your scheduling works and we&apos;ll build a compliance-ready demo agent for
+              Tell us how your scheduling works and we&apos;ll build a compliance-ready demo assistant for
               your practice — free.
             </p>
             <ul className="benefit-list mb-6">
@@ -193,7 +193,7 @@ export default function HealthcarePage() {
 
       <CtaBand
         title="Give every patient an instant answer"
-        subtitle="Get a free, privacy-first AI voice agent demo built for your clinic or hospital."
+        subtitle="Get a free, privacy-first AI assistant demo built for your clinic or hospital."
       />
     </>
   );

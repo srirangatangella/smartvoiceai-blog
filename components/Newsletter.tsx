@@ -43,7 +43,7 @@ export default function Newsletter() {
 
       <h3 className="font-serif text-3xl font-bold mb-3">Stay ahead of the curve</h3>
       <p className="text-gray-400 mb-8 max-w-md mx-auto">
-        Join our newsletter to receive the latest insights, case studies, and tutorials about AI Voice Agents and business automation.
+        Join our newsletter to receive the latest insights, case studies, and tutorials about AI assistants and business automation.
       </p>
 
       {status === "success" ? (

@@ -9,7 +9,7 @@ export async function GET() {
 
   const feed = new RSS({
     title: "Smart Voice AI Blog",
-    description: "Latest news, tutorials, and guides on AI voice agents, automation, and conversational AI.",
+    description: "Latest news, tutorials, and guides on AI assistants, automation, and conversational AI.",
     feed_url: `${baseUrl}/blog/rss.xml`,
     site_url: baseUrl,
     managingEditor: "contact@smartvoiceai.in (Smart Voice AI)",

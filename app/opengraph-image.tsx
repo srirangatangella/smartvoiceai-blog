@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "Smart Voice AI — AI Voice Agents for Real Estate & Healthcare";
+export const alt = "Smart Voice AI — AI Assistants for Real Estate & Healthcare";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -43,7 +43,7 @@ export default function OgImage() {
 
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ color: "#fff", fontSize: 66, fontWeight: 800, lineHeight: 1.1, letterSpacing: -2 }}>
-            AI Voice Agents for
+            AI Assistants for
           </div>
           <div style={{ fontSize: 66, fontWeight: 800, lineHeight: 1.1, letterSpacing: -2, color: "#00d4ff" }}>
             Real Estate &amp; Healthcare
@@ -54,7 +54,7 @@ export default function OgImage() {
         </div>
 
         <div style={{ display: "flex", gap: 14 }}>
-          {["Built on VAPI", "US & India", "Book a free demo"].map((t) => (
+          {["AI Receptionist", "US & India", "Book a free demo"].map((t) => (
             <div
               key={t}
               style={{

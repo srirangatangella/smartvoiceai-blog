@@ -8,24 +8,24 @@ import CtaBand from "@/components/CtaBand";
 import LeadForm from "@/components/LeadForm";
 
 export const metadata = buildMetadata({
-  title: "Inbound AI Voice Agents — 24/7 AI Receptionist & Call Answering",
+  title: "AI Receptionist — 24/7 Inbound Call Answering",
   description:
-    "Inbound AI voice agents that answer every call in one ring, qualify callers, book appointments, and route hot leads to your team. A 24/7 AI receptionist for real estate and healthcare. Free demo.",
+    "An AI receptionist that answers every call in one ring, qualifies callers, books appointments, and routes hot leads to your team — 24/7 for real estate and healthcare businesses. Free demo.",
   path: "/solutions/inbound-voice-agents",
   keywords: [
-    "inbound AI voice agent",
     "AI receptionist",
     "AI call answering service",
     "virtual receptionist AI",
     "24/7 AI phone answering",
+    "AI phone assistant",
   ],
 });
 
 const faqs = [
-  { q: "What is an inbound AI voice agent?", a: "It's an AI that answers your incoming phone calls in a natural, human-sounding voice — handling FAQs, qualifying the caller, booking appointments, and routing hot leads to a human when needed, 24/7." },
-  { q: "Can it transfer to a human?", a: "Yes. You define the rules — the agent can warm-transfer to the right person or team, take a message, or book a callback if no one is available." },
-  { q: "Does it work with my existing business number?", a: "Yes. We connect it to your existing number (or a new one) via telephony providers like Twilio, so callers just experience faster, always-available service." },
-  { q: "How natural does it sound?", a: "Very. Built on VAPI with premium voices and sub-second latency, conversations feel human — try the live demo to hear for yourself." },
+  { q: "What is an AI receptionist?", a: "It's an AI that answers your incoming phone calls in a natural, human-sounding voice — handling FAQs, qualifying the caller, booking appointments, and routing hot leads to a human when needed, 24/7." },
+  { q: "Can it transfer to a human?", a: "Yes. You define the rules — it can warm-transfer to the right person or team, take a message, or book a callback if no one is available." },
+  { q: "Does it work with my existing business number?", a: "Yes. We connect it to your existing number (or set up a new one), so your callers simply get faster, always-available service." },
+  { q: "How natural does it sound?", a: "Very natural — most callers can't tell. Conversations flow in real time, so it feels like talking to a real person. Try the live demo to hear for yourself." },
 ];
 
 const features = [
@@ -40,13 +40,13 @@ const features = [
 export default function InboundPage() {
   return (
     <>
-      <JsonLd data={serviceSchema({ name: "Inbound AI Voice Agents", description: metadata.description as string, path: "/solutions/inbound-voice-agents", serviceType: "Inbound AI voice agent / AI receptionist" })} />
-      <Breadcrumbs items={[{ name: "Solutions", path: "/solutions/inbound-voice-agents" }, { name: "Inbound Voice Agents", path: "/solutions/inbound-voice-agents" }]} />
+      <JsonLd data={serviceSchema({ name: "AI Receptionist (Inbound)", description: metadata.description as string, path: "/solutions/inbound-voice-agents", serviceType: "Inbound AI receptionist and call answering" })} />
+      <Breadcrumbs items={[{ name: "Solutions", path: "/solutions/inbound-voice-agents" }, { name: "AI Receptionist", path: "/solutions/inbound-voice-agents" }]} />
 
       <PageHero
         eyebrow="Inbound"
-        title={<>Inbound <span className="gradient-text">AI Voice Agents</span></>}
-        description="A 24/7 AI receptionist that answers every call in one ring, qualifies the caller, books appointments, and routes hot leads to your team — so you never lose business to a missed call again."
+        title={<>Your 24/7 <span className="gradient-text">AI Receptionist</span></>}
+        description="An AI receptionist that answers every call in one ring, qualifies the caller, books appointments, and routes hot leads to your team — so you never lose business to a missed call again."
       />
 
       <section className="section">
@@ -68,7 +68,7 @@ export default function InboundPage() {
       <section className="split">
         <div>
           <h2>Missed calls are missed revenue</h2>
-          <p className="lead">Studies show most callers won&apos;t leave a voicemail — they just call a competitor. An inbound agent captures 100% of that demand.</p>
+          <p className="lead">Studies show most callers won&apos;t leave a voicemail — they just call a competitor. An AI receptionist captures 100% of that demand.</p>
           <ul className="benefit-list">
             <li><CheckCircle2 className="h-5 w-5" /> Never miss a lead, even at 2am</li>
             <li><CheckCircle2 className="h-5 w-5" /> Cut front-desk workload on repetitive calls</li>
@@ -89,13 +89,13 @@ export default function InboundPage() {
         </div>
       </section>
 
-      <Faq faqs={faqs} title="Inbound voice agent FAQs" />
-      <CtaBand title="Answer every call, automatically" subtitle="Get a free inbound AI voice agent demo for your business." />
+      <Faq faqs={faqs} title="AI receptionist FAQs" />
+      <CtaBand title="Answer every call, automatically" subtitle="Get a free AI receptionist demo for your business." />
       <section className="section" id="contact">
         <div className="form-section">
           <div>
             <span className="eyebrow" style={{ marginBottom: 18 }}>Get started</span>
-            <h2 className="text-4xl font-bold leading-[1.1] mb-5">Hear your inbound agent live</h2>
+            <h2 className="text-4xl font-bold leading-[1.1] mb-5">Hear your AI receptionist live</h2>
             <p className="text-lg text-gray-400 mb-8">We&apos;ll build a free demo tuned to your business and call flows.</p>
           </div>
           <LeadForm source="Inbound solution page" />

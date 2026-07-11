@@ -8,7 +8,7 @@ export default function BlogHero() {
         Smart Voice AI <span className="gradient-text font-extrabold">Blog</span>
       </h1>
       <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
-        Insights, guides, and tutorials on building next-generation conversational AI Voice Agents and automating business operations.
+        Insights, guides, and tutorials on AI assistants for real estate and healthcare — lead capture, appointment booking, and business automation.
       </p>
     </div>
   );

@@ -6,42 +6,42 @@ import Faq from "@/components/Faq";
 import CtaBand from "@/components/CtaBand";
 
 export const metadata = buildMetadata({
-  title: "Integrations — Connect Your AI Voice Agent to Your CRM & Calendar",
+  title: "Integrations — Connect Your AI Assistant to Your CRM & Calendar",
   description:
-    "Smart Voice AI voice agents integrate with HubSpot, Salesforce, GoHighLevel, Google Calendar, Outlook, Twilio, and your EHR or custom systems via secure API and webhooks. Every call synced.",
+    "Smart Voice AI assistants integrate with HubSpot, Salesforce, GoHighLevel, Google Calendar, Outlook, and your EHR or custom systems via secure API and webhooks. Every call synced.",
   path: "/integrations",
   keywords: [
-    "AI voice agent CRM integration",
-    "HubSpot voice agent",
-    "Salesforce voice AI",
-    "GoHighLevel voice agent",
-    "voice agent calendar integration",
+    "AI assistant CRM integration",
+    "HubSpot AI assistant",
+    "Salesforce AI assistant",
+    "GoHighLevel AI assistant",
+    "AI assistant calendar integration",
   ],
 });
 
 const groups = [
   { icon: Database, title: "CRM", items: ["HubSpot", "Salesforce", "GoHighLevel", "Zoho", "Pipedrive"] },
   { icon: CalIcon, title: "Calendars & Scheduling", items: ["Google Calendar", "Outlook / Microsoft 365", "Cal.com", "Calendly", "Practice-management systems"] },
-  { icon: Phone, title: "Telephony", items: ["Twilio", "Your existing business number", "SIP trunks", "Toll-free & local numbers"] },
+  { icon: Phone, title: "Phone & Calling", items: ["Your existing business number", "New local & toll-free numbers", "Call routing & transfer", "Voicemail & callbacks"] },
   { icon: Webhook, title: "Automation & Custom", items: ["n8n", "Zapier", "Make", "Custom REST APIs", "Secure webhooks"] },
 ];
 
 const faqs = [
   { q: "What if my system isn't listed?", a: "If it has an API or can accept a webhook, we can almost certainly connect it. We build custom integrations for CRMs, EHRs, and internal tools regularly — just tell us what you use." },
-  { q: "How does the data flow?", a: "During and after each call, the agent captures structured data (contact, intent, appointment) and pushes it to your CRM, plus a full transcript and summary. Bookings are written to your live calendar." },
+  { q: "How does the data flow?", a: "During and after each call, your assistant captures structured data (contact, intent, appointment) and pushes it to your CRM, plus a full transcript and summary. Bookings are written to your live calendar." },
   { q: "Is the integration secure?", a: "Yes. We use authenticated API connections and encrypted transport, with least-privilege access scoped to only what's needed." },
 ];
 
 export default function IntegrationsPage() {
   return (
     <>
-      <JsonLd data={serviceSchema({ name: "AI Voice Agent Integrations", description: metadata.description as string, path: "/integrations", serviceType: "CRM, calendar and telephony integration for AI voice agents" })} />
+      <JsonLd data={serviceSchema({ name: "AI Assistant Integrations", description: metadata.description as string, path: "/integrations", serviceType: "CRM, calendar and phone integration for AI assistants" })} />
       <Breadcrumbs items={[{ name: "Integrations", path: "/integrations" }]} />
 
       <PageHero
         eyebrow="Integrations"
         title={<>Connect to the tools you <span className="gradient-text">already use</span></>}
-        description="Your AI voice agent plugs into your CRM, calendar, phone system, and automation stack — so every call becomes a synced record, a booked appointment, or a routed lead. No rip-and-replace."
+        description="Your AI assistant plugs into your CRM, calendar, phone system, and automation stack — so every call becomes a synced record, a booked appointment, or a routed lead. No rip-and-replace."
         showDemo={false}
       />
 
@@ -67,7 +67,7 @@ export default function IntegrationsPage() {
           <p className="lead">
             We integrate with proprietary CRMs, EHRs, and internal tools through their APIs or via
             secure webhooks and middleware like n8n. If your team can describe the workflow, we can
-            wire the agent into it.
+            wire your assistant into it.
           </p>
           <ul className="benefit-list">
             <li><CheckCircle2 className="h-5 w-5" /> Real-time, two-way data sync</li>
@@ -80,13 +80,13 @@ export default function IntegrationsPage() {
             <div className="flex items-center gap-3"><PlugZap className="h-6 w-6 text-primary" /><span className="text-gray-300">API &amp; webhook connectors</span></div>
             <div className="flex items-center gap-3"><Database className="h-6 w-6 text-primary" /><span className="text-gray-300">CRM record creation &amp; updates</span></div>
             <div className="flex items-center gap-3"><CalIcon className="h-6 w-6 text-primary" /><span className="text-gray-300">Live calendar booking</span></div>
-            <div className="flex items-center gap-3"><Phone className="h-6 w-6 text-primary" /><span className="text-gray-300">Telephony &amp; number porting</span></div>
+            <div className="flex items-center gap-3"><Phone className="h-6 w-6 text-primary" /><span className="text-gray-300">Phone setup &amp; number porting</span></div>
           </div>
         </div>
       </section>
 
       <Faq faqs={faqs} title="Integration FAQs" />
-      <CtaBand title="Works with your stack" subtitle="Tell us what you use — we'll show you how the agent connects." />
+      <CtaBand title="Works with your stack" subtitle="Tell us what you use — we'll show you how your assistant connects." />
     </>
   );
 }

@@ -14,7 +14,7 @@ export default function BookingSection() {
       <div className="section-header">
         <span className="eyebrow">Book a Call</span>
         <h2>Schedule a free strategy call</h2>
-        <p>Pick a time that works for you. We&apos;ll map your call flows and show you a live agent.</p>
+        <p>Pick a time that works for you. We&apos;ll map your call flows and show you a live assistant.</p>
       </div>
 
       {isPlaceholder ? (

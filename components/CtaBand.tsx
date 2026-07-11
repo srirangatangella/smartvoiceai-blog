@@ -3,7 +3,7 @@ import { ArrowRight, Mic } from "lucide-react";
 
 export default function CtaBand({
   title = "Ready to stop losing leads to missed calls?",
-  subtitle = "Book a free consultation and we'll build a custom AI voice agent demo for your business — no cost, no obligation.",
+  subtitle = "Book a free consultation and we'll build a custom AI assistant demo for your business — no cost, no obligation.",
   primaryLabel = "Book a Free Consultation",
   primaryHref = "/contact",
 }: {

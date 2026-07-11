@@ -24,9 +24,9 @@ export default function SiteFooter() {
             </span>
           </Link>
           <p className="footer-tagline">
-            Custom AI voice agents for real estate and healthcare businesses across the US and
-            India. Inbound &amp; outbound calls, appointment booking, and CRM integration — built on
-            VAPI.
+            Custom AI assistants for real estate and healthcare businesses across the US and India.
+            They answer every call, book appointments, and sync to your CRM — 24/7, on the phone and
+            on your website.
           </p>
           <div className="footer-contacts">
             <a href={`mailto:${siteConfig.email}`}>

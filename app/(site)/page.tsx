@@ -20,16 +20,16 @@ import CtaBand from "@/components/CtaBand";
 import LeadForm from "@/components/LeadForm";
 
 export const metadata = buildMetadata({
-  title: "AI Voice Agents for Real Estate & Healthcare",
+  title: "AI Assistants for Real Estate & Healthcare",
   description:
-    "Smart Voice AI builds custom AI voice agents on VAPI for real estate and healthcare businesses in the US & India — 24/7 inbound & outbound calls, appointment booking, and CRM integration. Book a free demo.",
+    "Smart Voice AI builds custom AI assistants that answer every call, qualify leads, book appointments, and sync to your CRM — 24/7, for real estate and healthcare businesses in the US & India. Book a free demo.",
   path: "/",
   keywords: [
-    "AI voice agents",
+    "AI receptionist",
     "AI receptionist for real estate",
-    "AI voice agent for hospitals",
+    "AI answering service for clinics",
     "AI appointment booking",
-    "VAPI voice agent",
+    "AI assistant for business",
   ],
 });
 
@@ -39,8 +39,8 @@ const steps = [
     body: "We map your call flows, scripts, and the outcomes you care about — booked appointments, qualified leads, fewer no-shows.",
   },
   {
-    title: "Custom agent + demo",
-    body: "We build a voice agent tailored to your business on VAPI and hand you a live demo to test with real calls.",
+    title: "Custom assistant + demo",
+    body: "We build an AI assistant tailored to your business and hand you a live demo to test with real calls.",
   },
   {
     title: "Integrate & connect",
@@ -48,7 +48,7 @@ const steps = [
   },
   {
     title: "Go live & optimise",
-    body: "Your agent answers 24/7. We monitor transcripts and tune performance so it keeps getting better.",
+    body: "Your assistant answers 24/7. We monitor and fine-tune it so it keeps getting better.",
   },
 ];
 
@@ -57,10 +57,10 @@ export default function HomePage() {
     <>
       <JsonLd
         data={serviceSchema({
-          name: "AI Voice Agent Development",
+          name: "AI Assistants for Business",
           description: siteConfig.description,
           path: "/",
-          serviceType: "AI voice agents for inbound and outbound calls",
+          serviceType: "AI receptionist and assistant for inbound and outbound calls",
         })}
       />
 
@@ -68,16 +68,16 @@ export default function HomePage() {
       <section className="hero">
         <span className="orb orb-primary" style={{ width: 500, height: 500, top: -220, left: "50%", transform: "translateX(-50%)" }} />
         <span className="eyebrow hero-badge">
-          <Sparkles className="h-3.5 w-3.5" /> Built on VAPI · US &amp; India
+          <Sparkles className="h-3.5 w-3.5" /> Smart AI Assistants · US &amp; India
         </span>
         <h1>
-          AI Voice Agents for{" "}
+          AI Assistants for{" "}
           <span className="gradient-text">Real Estate &amp; Healthcare</span>
         </h1>
         <p>
-          Never lose another lead to a missed call. We build hyper-realistic AI voice agents that
-          answer, qualify, book appointments, and sync to your CRM — 24/7, on the phone and on your
-          website.
+          Never lose another lead to a missed call. We build hyper-realistic AI assistants that
+          answer every call, qualify leads, book appointments, and sync to your CRM — 24/7, on the
+          phone and on your website.
         </p>
         <div className="hero-btns">
           <Link href="/demo?client=apas" className="btn btn-primary">
@@ -95,7 +95,7 @@ export default function HomePage() {
           </div>
           <div className="hero-stat">
             <div className="num">&lt;1s</div>
-            <div className="label">Response latency</div>
+            <div className="label">Instant response</div>
           </div>
           <div className="hero-stat">
             <div className="num">2</div>
@@ -116,7 +116,7 @@ export default function HomePage() {
       <section className="section">
         <div className="section-header">
           <span className="eyebrow">How it works</span>
-          <h2>From first call to live agent in weeks</h2>
+          <h2>From first call to live assistant in weeks</h2>
         </div>
         <div className="steps">
           {steps.map((s, i) => (
@@ -134,7 +134,7 @@ export default function HomePage() {
         <div className="section-header">
           <span className="eyebrow">Industries</span>
           <h2>Purpose-built for high-value verticals</h2>
-          <p>Deep, industry-specific agents — not generic bots.</p>
+          <p>Deep, industry-specific assistants — not generic bots.</p>
         </div>
         <div className="grid-3">
           <Link href="/industries/real-estate" className="card">
@@ -187,11 +187,11 @@ export default function HomePage() {
               Live Demo
             </span>
             <h2 style={{ fontSize: 34, marginBottom: 16 }}>
-              Talk to <span className="text-primary">&ldquo;Sneha&rdquo;</span>, our AI sales agent
+              Meet <span className="text-primary">&ldquo;Sneha&rdquo;</span>, our AI assistant
             </h2>
             <p className="mb-8 text-base text-gray-300">
-              Experience real-time, sub-second conversation. Sneha handles complex real estate
-              queries, overcomes objections, and books site visits — right in your browser.
+              Have a natural, real-time conversation. Sneha handles real estate questions, overcomes
+              objections, and books site visits — right in your browser.
             </p>
             <Link href="/demo?client=apas" className="btn btn-primary">
               <Mic className="h-5 w-5" /> Try the Live Demo
@@ -224,7 +224,7 @@ export default function HomePage() {
               Get a free custom AI voice demo
             </h2>
             <p className="text-lg text-gray-400 mb-8">
-              Tell us about your business and we&apos;ll build a tailored voice agent demo for your
+              Tell us about your business and we&apos;ll build a tailored AI assistant demo for your
               niche — free. See it handle your calls before you commit.
             </p>
 

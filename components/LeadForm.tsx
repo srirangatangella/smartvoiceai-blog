@@ -88,7 +88,7 @@ export default function LeadForm({ source = "Website" }: { source?: string }) {
           </select>
         </div>
         <div className="input-group">
-          <label htmlFor="message">What would you like the agent to do?</label>
+          <label htmlFor="message">What would you like the assistant to do?</label>
           <textarea
             id="message"
             value={form.message}

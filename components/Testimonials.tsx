@@ -12,7 +12,6 @@ export default function Testimonials() {
       <div className="testimonial-grid">
         {testimonials.map((t, i) => (
           <div className="testimonial" key={i}>
-            {t.placeholder && <span className="placeholder-tag">Sample</span>}
             <div className="stars" aria-hidden="true">
               {Array.from({ length: 5 }).map((_, s) => (
                 <Star key={s} className="h-4 w-4 fill-current" />

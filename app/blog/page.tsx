@@ -17,7 +17,7 @@ interface PageProps {
 export const metadata = {
   title: "Blog | Smart Voice AI",
   description:
-    "Insights, guides, and tutorials on building next-generation conversational AI Voice Agents and automating business operations.",
+    "Insights, guides, and tutorials on AI assistants for real estate and healthcare — lead capture, appointment booking, and business automation.",
   alternates: {
     canonical: "/blog",
   },

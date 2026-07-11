@@ -16,13 +16,13 @@ import CtaBand from "@/components/CtaBand";
 import LeadForm from "@/components/LeadForm";
 
 export const metadata = buildMetadata({
-  title: "AI Voice Agent for Real Estate — Qualify Leads & Book Site Visits",
+  title: "AI Receptionist for Real Estate — Qualify Leads & Book Site Visits",
   description:
-    "An AI voice agent for real estate that answers every enquiry 24/7, qualifies buyers, answers project FAQs, and books site visits directly into your calendar and CRM. Get a free demo.",
+    "An AI assistant for real estate that answers every enquiry 24/7, qualifies buyers, answers project FAQs, and books site visits directly into your calendar and CRM. Get a free demo.",
   path: "/industries/real-estate",
   keywords: [
-    "AI voice agent for real estate",
     "AI receptionist for real estate",
+    "AI assistant for real estate",
     "real estate lead qualification AI",
     "AI to book site visits",
     "real estate call answering service",
@@ -31,12 +31,12 @@ export const metadata = buildMetadata({
 
 const faqs = [
   {
-    q: "How does an AI voice agent help a real estate business?",
+    q: "How does an AI assistant help a real estate business?",
     a: "It answers every inbound enquiry instantly — 24/7 — qualifies the buyer (budget, location, timeline, configuration), answers questions about your projects, and books site visits directly into your sales team's calendar. No lead ever goes to voicemail again.",
   },
   {
     q: "Can it call leads back automatically (outbound)?",
-    a: "Yes. The agent can call new portal or ad leads within seconds of them coming in, follow up with people who didn't answer, and re-engage cold leads with reactivation campaigns.",
+    a: "Yes. Your assistant can call new portal or ad leads within seconds of them coming in, follow up with people who didn't answer, and re-engage cold leads with reactivation campaigns.",
   },
   {
     q: "Will it integrate with my CRM and portals?",
@@ -44,16 +44,16 @@ const faqs = [
   },
   {
     q: "Does it work for projects in both the US and India?",
-    a: "Yes. We deploy agents that speak US or Indian English and handle local calling requirements for both markets.",
+    a: "Yes. We deploy assistants that speak US or Indian English and handle local calling requirements for both markets.",
   },
   {
     q: "Can it show floor plans or project details during a call?",
-    a: "On our website and demo experiences, the agent can display floor plans, master plans, and unit visuals on screen while it talks — exactly what you'll see in the live demo.",
+    a: "On our website and demo experiences, it can display floor plans, master plans, and unit visuals on screen while it talks — exactly what you'll see in the live demo.",
   },
 ];
 
 const useCases = [
-  { icon: Clock, title: "After-hours enquiries", body: "Buyers browse at night. Your agent answers at 2am, qualifies them, and books the visit while they're still interested." },
+  { icon: Clock, title: "After-hours enquiries", body: "Buyers browse at night. Your assistant answers at 2am, qualifies them, and books the visit while they're still interested." },
   { icon: Filter, title: "Instant lead qualification", body: "Captures budget, configuration, location, and timeline so your sales team only spends time on ready buyers." },
   { icon: CalendarCheck, title: "Site-visit booking", body: "Checks live availability and books the visit into your team's calendar during the call — with automatic reminders." },
   { icon: PhoneIncoming, title: "Portal & ad speed-to-lead", body: "Calls fresh leads within seconds. Speed-to-lead is the single biggest driver of conversion." },
@@ -66,10 +66,10 @@ export default function RealEstatePage() {
     <>
       <JsonLd
         data={serviceSchema({
-          name: "AI Voice Agents for Real Estate",
+          name: "AI Assistants for Real Estate",
           description: metadata.description as string,
           path: "/industries/real-estate",
-          serviceType: "Real estate AI voice agent for lead qualification and appointment booking",
+          serviceType: "Real estate AI assistant for lead qualification and appointment booking",
         })}
       />
       <Breadcrumbs items={[{ name: "Industries", path: "/industries/real-estate" }, { name: "Real Estate", path: "/industries/real-estate" }]} />
@@ -78,10 +78,10 @@ export default function RealEstatePage() {
         eyebrow="Real Estate"
         title={
           <>
-            AI Voice Agent for <span className="gradient-text">Real Estate</span>
+            AI Assistant for <span className="gradient-text">Real Estate</span>
           </>
         }
-        description="Turn missed calls into booked site visits. Our AI voice agent answers every buyer enquiry 24/7, qualifies them, and books visits straight into your calendar and CRM — for developers, brokers, and sales teams across the US and India."
+        description="Turn missed calls into booked site visits. Our AI assistant answers every buyer enquiry 24/7, qualifies them, and books visits straight into your calendar and CRM — for developers, brokers, and sales teams across the US and India."
       />
 
       {/* Problem / value split */}
@@ -122,7 +122,7 @@ export default function RealEstatePage() {
       <section className="section">
         <div className="section-header">
           <span className="eyebrow">Use cases</span>
-          <h2>What your real estate agent handles</h2>
+          <h2>What your real estate assistant handles</h2>
         </div>
         <div className="grid-3">
           {useCases.map((u) => (
@@ -137,7 +137,7 @@ export default function RealEstatePage() {
         </div>
       </section>
 
-      <Faq faqs={faqs} title="Real estate voice agent FAQs" />
+      <Faq faqs={faqs} title="Real estate AI assistant FAQs" />
 
       {/* Lead form */}
       <section className="section" id="contact">
@@ -146,7 +146,7 @@ export default function RealEstatePage() {
             <span className="eyebrow" style={{ marginBottom: 18 }}>Get started</span>
             <h2 className="text-4xl font-bold leading-[1.1] mb-5">See it qualify a buyer live</h2>
             <p className="text-lg text-gray-400 mb-8">
-              We&apos;ll build a free demo agent for one of your projects. Talk to it, then decide.
+              We&apos;ll build a free demo assistant for one of your projects. Talk to it, then decide.
             </p>
             <ul className="benefit-list mb-6">
               <li><CheckCircle2 className="h-5 w-5" /> Custom-scripted for your project &amp; pricing</li>
@@ -161,7 +161,7 @@ export default function RealEstatePage() {
 
       <CtaBand
         title="Book more site visits, automatically"
-        subtitle="Get a free custom real estate voice agent demo built for your projects."
+        subtitle="Get a free custom real estate AI assistant demo built for your projects."
       />
     </>
   );

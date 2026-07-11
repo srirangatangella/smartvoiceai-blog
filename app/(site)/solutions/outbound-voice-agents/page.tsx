@@ -8,23 +8,23 @@ import CtaBand from "@/components/CtaBand";
 import LeadForm from "@/components/LeadForm";
 
 export const metadata = buildMetadata({
-  title: "Outbound AI Voice Agents — Automated Lead Follow-up & Callbacks",
+  title: "Outbound AI Calls — Automated Lead Follow-up & Callbacks",
   description:
-    "Outbound AI voice agents that call new leads in seconds, follow up with no-shows, and run reactivation campaigns at scale — natural, human-sounding, and synced to your CRM. Free demo.",
+    "AI-powered outbound calls that reach new leads in seconds, follow up with no-shows, and run reactivation campaigns at scale — natural, human-sounding, and synced to your CRM. Free demo.",
   path: "/solutions/outbound-voice-agents",
   keywords: [
-    "outbound AI voice agent",
-    "AI lead follow-up calls",
     "automated outbound calling",
+    "AI lead follow-up calls",
+    "AI callback service",
     "AI cold calling",
     "speed to lead AI",
   ],
 });
 
 const faqs = [
-  { q: "What can an outbound AI voice agent do?", a: "It places calls automatically — following up new leads within seconds, chasing no-shows and unconfirmed appointments, running reactivation campaigns on old leads, and confirming details — all with natural conversation and CRM logging." },
+  { q: "What can automated outbound calling do?", a: "It places calls automatically — following up new leads within seconds, chasing no-shows and unconfirmed appointments, running reactivation campaigns on old leads, and confirming details — all with natural conversation and CRM logging." },
   { q: "Is automated outbound calling compliant?", a: "We configure campaigns to respect consent, calling-time windows, do-not-call lists, and disclosure requirements for your region. You stay in control of who gets called and when." },
-  { q: "Can it hand off interested people to my team?", a: "Yes — when a lead is hot, the agent can warm-transfer to a human, book a meeting, or schedule a callback based on your rules." },
+  { q: "Can it hand off interested people to my team?", a: "Yes — when a lead is hot, it can warm-transfer to a human, book a meeting, or schedule a callback based on your rules." },
   { q: "How fast can it call a new lead?", a: "Within seconds of the lead hitting your CRM or form. Speed-to-lead is the biggest lever on conversion, and automation makes it instant." },
 ];
 
@@ -40,12 +40,12 @@ const features = [
 export default function OutboundPage() {
   return (
     <>
-      <JsonLd data={serviceSchema({ name: "Outbound AI Voice Agents", description: metadata.description as string, path: "/solutions/outbound-voice-agents", serviceType: "Outbound AI voice agent for lead follow-up and reactivation" })} />
-      <Breadcrumbs items={[{ name: "Solutions", path: "/solutions/inbound-voice-agents" }, { name: "Outbound Voice Agents", path: "/solutions/outbound-voice-agents" }]} />
+      <JsonLd data={serviceSchema({ name: "Outbound AI Calls", description: metadata.description as string, path: "/solutions/outbound-voice-agents", serviceType: "Outbound AI calling for lead follow-up and reactivation" })} />
+      <Breadcrumbs items={[{ name: "Solutions", path: "/solutions/inbound-voice-agents" }, { name: "Outbound Calls", path: "/solutions/outbound-voice-agents" }]} />
 
       <PageHero
         eyebrow="Outbound"
-        title={<>Outbound <span className="gradient-text">AI Voice Agents</span></>}
+        title={<>Outbound <span className="gradient-text">AI Calls</span></>}
         description="Follow up every lead in seconds, recover no-shows, and reactivate cold databases — automatically. Human-sounding outbound calling at scale, fully logged to your CRM."
       />
 
@@ -68,7 +68,7 @@ export default function OutboundPage() {
       <section className="split">
         <div>
           <h2>The fortune is in the follow-up</h2>
-          <p className="lead">Most leads never get a second call. An outbound agent works your pipeline relentlessly and consistently — without burning out your sales team.</p>
+          <p className="lead">Most leads never get a second call. Automated outbound calling works your pipeline relentlessly and consistently — without burning out your sales team.</p>
           <ul className="benefit-list">
             <li><CheckCircle2 className="h-5 w-5" /> Call leads within seconds, 100% of the time</li>
             <li><CheckCircle2 className="h-5 w-5" /> Recover revenue from no-shows &amp; old leads</li>
@@ -89,8 +89,8 @@ export default function OutboundPage() {
         </div>
       </section>
 
-      <Faq faqs={faqs} title="Outbound voice agent FAQs" />
-      <CtaBand title="Put your follow-up on autopilot" subtitle="Get a free outbound AI voice agent demo for your pipeline." />
+      <Faq faqs={faqs} title="Outbound calling FAQs" />
+      <CtaBand title="Put your follow-up on autopilot" subtitle="Get a free outbound calling demo for your pipeline." />
       <section className="section" id="contact">
         <div className="form-section">
           <div>

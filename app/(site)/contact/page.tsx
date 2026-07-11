@@ -7,9 +7,9 @@ import LeadForm from "@/components/LeadForm";
 import BookingSection from "@/components/BookingSection";
 
 export const metadata = buildMetadata({
-  title: "Contact — Book a Free AI Voice Agent Demo",
+  title: "Contact — Book a Free AI Assistant Demo",
   description:
-    "Talk to Smart Voice AI. Book a free consultation and we'll build a custom AI voice agent demo for your real estate or healthcare business. Serving the US and India.",
+    "Talk to Smart Voice AI. Book a free consultation and we'll build a custom AI assistant demo for your real estate or healthcare business. Serving the US and India.",
   path: "/contact",
 });
 
@@ -20,7 +20,7 @@ export default function ContactPage() {
       <PageHero
         eyebrow="Contact"
         title={<>Book your <span className="gradient-text">free demo</span></>}
-        description="Tell us about your business and we'll build a custom AI voice agent demo for your niche — free. Prefer to talk now? WhatsApp or email us directly."
+        description="Tell us about your business and we'll build a custom AI assistant demo for your niche — free. Prefer to talk now? WhatsApp or email us directly."
         showDemo={false}
       />
 
@@ -41,13 +41,13 @@ export default function ContactPage() {
                 <Globe2 className="h-6 w-6 text-primary" /> Serving the US &amp; India
               </div>
               <div className="contact-detail mt-0">
-                <Clock className="h-6 w-6 text-primary" /> Agents run 24/7 — our team replies during business hours
+                <Clock className="h-6 w-6 text-primary" /> Assistants run 24/7 — our team replies during business hours
               </div>
             </div>
 
             <ul className="benefit-list">
               <li><CheckCircle2 className="h-5 w-5" /> Free, no-obligation consultation</li>
-              <li><CheckCircle2 className="h-5 w-5" /> A custom demo agent built for your business</li>
+              <li><CheckCircle2 className="h-5 w-5" /> A custom demo assistant built for your business</li>
               <li><CheckCircle2 className="h-5 w-5" /> Transparent, tailored pricing</li>
             </ul>
           </div>
