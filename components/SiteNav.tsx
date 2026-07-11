@@ -9,7 +9,7 @@ export default function SiteNav() {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav>
+    <nav className="site-header">
       <Link href="/" className="nav-logo" aria-label="Smart Voice AI home">
         <span className="nav-logo-mark">
           <Mic className="h-5 w-5" />

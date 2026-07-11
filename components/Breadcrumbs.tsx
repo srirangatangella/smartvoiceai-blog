@@ -7,7 +7,7 @@ export default function Breadcrumbs({ items }: { items: { name: string; path: st
     <nav className="breadcrumb" aria-label="Breadcrumb">
       <JsonLd data={breadcrumbSchema(full)} />
       {full.map((item, i) => (
-        <span key={item.path}>
+        <span key={`${i}-${item.path}`}>
           {i < full.length - 1 ? (
             <Link href={item.path}>{item.name}</Link>
           ) : (

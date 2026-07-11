@@ -100,10 +100,11 @@ body {
   border-color: #fff;
 }
 
-/* NAVIGATION */
-nav {
+/* NAVIGATION — scoped to the site header only (not every <nav>, e.g. breadcrumbs/TOC) */
+.site-header {
   position: fixed;
   top: 0;
+  left: 0;
   width: 100%;
   z-index: 1000;
   padding: 20px 5%;
@@ -923,7 +924,7 @@ footer {
 .page-hero {
   max-width: 1000px;
   margin: 0 auto;
-  padding: 150px 5% 40px;
+  padding: 40px 5% 40px;
   text-align: center;
   position: relative;
 }
@@ -1087,7 +1088,7 @@ footer {
     letter-spacing: -1px;
   }
   .page-hero {
-    padding: 120px 5% 30px;
+    padding: 30px 5% 20px;
   }
   .page-hero h1 {
     font-size: 36px;
