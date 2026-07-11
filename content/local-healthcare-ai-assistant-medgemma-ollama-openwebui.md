@@ -2,7 +2,7 @@
 title: "Building a Private Healthcare AI Assistant with MedGemma, Ollama & Open WebUI: Complete Guide"
 date: "2024-06-15"
 description: "Step-by-step tutorial for deploying a fully local medical AI assistant using cutting-edge open source tools, preserving data privacy for sensitive healthcare applications."
-draft: false
+draft: true
 ---
 
 ## The Privacy Imperative in Healthcare AI

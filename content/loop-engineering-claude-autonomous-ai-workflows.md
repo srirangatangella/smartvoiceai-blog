@@ -2,7 +2,7 @@
 title: "Loop Engineering in Claude: The Future of Autonomous AI Workflows"
 date: "2026-07-10"
 description: "Explore how loop engineering in Claude Code is transforming AI development with automated workflows, goal checking, and scheduled routines for autonomous agents."
-draft: false
+draft: true
 ---
 
 ## The Rise of Loop Engineering in AI Development

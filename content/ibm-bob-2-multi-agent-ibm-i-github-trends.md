@@ -2,7 +2,7 @@
 title: "IBM Bob 2.0: Multi-Agent Support, IBM i Optimization, and Trending GitHub Tools"
 date: "2026-07-10"
 description: "A deep dive into IBM Bob 2.0's architectural upgrades, multi-agent workflows, and trending AI tools for enterprise modernization."
-draft: false
+draft: true
 ---
 
 ## IBM Bob 2.0: A Leap in Enterprise AI Development

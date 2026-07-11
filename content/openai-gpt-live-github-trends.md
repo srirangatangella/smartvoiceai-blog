@@ -2,7 +2,7 @@
 title: "OpenAI GPT-Live: Full-Duplex Voice AI & GitHub Trends Explained"
 date: "2024-08-20"
 description: "Explore GPT-Live's human-like voice conversations, visual cards for dynamic interactions, and trending GitHub AI tools revolutionizing coding productivity."
-draft: false
+draft: true
 ---
 
 # OpenAI GPT-Live: The Next Leap in Voice Conversations

@@ -1,0 +1,35 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:smartvoiceai.in)",
+      "WebFetch(domain:smartvoiceai.netlify.app)",
+      "Bash(curl -sL https://smartvoiceai.in/robots.txt)",
+      "Bash(curl -sL https://smartvoiceai.in/sitemap.xml)",
+      "Bash(curl -sI https://smartvoiceai.in/)",
+      "Bash(curl -sI https://smarvoiceai.in/)",
+      "Bash(curl -sL https://smartvoiceai.netlify.app/robots.txt)",
+      "Bash(curl -sL -o /dev/null -w \"%{http_code}\\\\n\" https://smartvoiceai.netlify.app/sitemap.xml)",
+      "Bash(curl -sL -o /dev/null -w \"%{http_code}\\\\n\" https://smartvoiceai.netlify.app/blog)",
+      "Bash(curl -sL -o /dev/null -w \"%{http_code}\\\\n\" https://smartvoiceai.netlify.app/og/home.jpg)",
+      "Bash(curl -sL https://smartvoiceai.netlify.app/sitemap.xml)",
+      "Bash(curl -sL https://smartvoiceai.netlify.app/blog)",
+      "Bash(git clone *)",
+      "Bash(echo \"---EXIT $?---\")",
+      "Bash(npm -v)",
+      "Bash(npm install *)",
+      "Bash(npm run *)",
+      "Bash(curl -s -o /dev/null -w \"home:%{http_code}\\\\n\" http://localhost:3000/)",
+      "Bash(curl -s -o /dev/null -w \"realestate:%{http_code}\\\\n\" http://localhost:3000/industries/real-estate)",
+      "Bash(curl -s -o /dev/null -w \"healthcare:%{http_code}\\\\n\" http://localhost:3000/industries/healthcare)",
+      "Bash(curl -s -o /dev/null -w \"pricing:%{http_code}\\\\n\" http://localhost:3000/pricing)",
+      "Bash(curl -s -o /dev/null -w \"contact:%{http_code}\\\\n\" http://localhost:3000/contact)",
+      "Bash(curl -s http://localhost:3000/robots.txt)",
+      "Bash(curl -s http://localhost:3000/sitemap.xml)",
+      "Bash(curl -s -o /dev/null -w \"og status:%{http_code} type:%{content_type}\\\\n\" http://localhost:3000/opengraph-image)",
+      "Bash(curl -s -X POST http://localhost:3000/api/lead -H 'Content-Type: application/json' -d '{\"name\":\"Test User\",\"email\":\"test@example.com\",\"mobile\":\"+15551234567\",\"industry\":\"Real Estate\",\"source\":\"smoke-test\"}')",
+      "Bash(curl -s -X POST http://localhost:3000/api/lead -H 'Content-Type: application/json' -d '{\"name\":\"X\",\"email\":\"bad\",\"mobile\":\"1\"}')",
+      "Bash(curl -s -m 45 -o /tmp/og.png -w \"og status:%{http_code} type:%{content_type} size:%{size_download}\\\\n\" http://localhost:3000/opengraph-image)",
+      "Read(//tmp/**)"
+    ]
+  }
+}

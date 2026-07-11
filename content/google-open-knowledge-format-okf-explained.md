@@ -2,7 +2,7 @@
 title: "Google's Open Knowledge Format (OKF): The Markdown-Based Standard for AI-Accessible Organizational Knowledge"
 date: "2026-06-15"
 description: "A technical deep dive into Google's Open Knowledge Format (OKF) v0.1 - the standardized approach for organizational knowledge representation using Markdown and YAML frontmatter."
-draft: false
+draft: true
 ---
 
 ## Introduction

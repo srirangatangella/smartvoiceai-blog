@@ -1,10 +1,11 @@
 import RSS from "rss";
 import { NextResponse } from "next/server";
 import { getAllPosts } from "@/lib/posts";
+import { siteConfig } from "@/lib/site";
 
 export async function GET() {
   const posts = getAllPosts();
-  const baseUrl = "https://smarvoiceai.in";
+  const baseUrl = siteConfig.url;
 
   const feed = new RSS({
     title: "Smart Voice AI Blog",

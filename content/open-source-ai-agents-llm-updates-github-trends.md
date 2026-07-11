@@ -2,7 +2,7 @@
 title: "2026 Open-Source AI Agent Revolution: Local LLMs, Model Updates, and GitHub Trends"
 date: "2026-07-11"
 description: "Explore the latest open-source AI agents, LLM updates (GLM-5.2, Qwen3.5), and GitHub projects optimizing tool use, privacy, and efficiency."
-draft: false
+draft: true
 ---
 
 ## The Rise of Local AI Agents and Open-Source LLMs

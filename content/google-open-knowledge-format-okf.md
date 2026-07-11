@@ -2,7 +2,7 @@
 title: "Google Open Knowledge Format (OKF): The Future of Organizational Knowledge Management"
 date: "2026-06-15"
 description: "Explore Google's Open Knowledge Format (OKF), a standardized way to store organizational knowledge in markdown files designed for both humans and AI agents."
-draft: false
+draft: true
 ---
 
 ## Introduction
