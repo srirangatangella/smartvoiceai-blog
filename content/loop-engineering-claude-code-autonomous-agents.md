@@ -1,7 +1,8 @@
 ---
 title: "Loop Engineering Revolution: How Claude Code and Autonomous Agents Are Changing AI Development"
-date: 2023-11-15
+date: "2023-11-15"
 description: "A deep dive into loop engineering practices powering Claude Code's autonomous agents, featuring trending tools and enterprise adoption patterns."
+draft: false
 ---
 
 ## The Rise of Loop Engineering
