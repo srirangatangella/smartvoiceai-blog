@@ -1,16 +1,7 @@
 ---
-title: Complete Guide to AI Call Center Automation
-description: How businesses are deploying automated voice assistants to handle high call volumes, qualify leads, and slash operational costs.
-date: 2026-07-09
-author: Smart Voice AI
-category: AI Voice Agents
-tags:
-  - Automation
-  - Call Center
-  - Customer Service
-  - ROI
-image: https://images.unsplash.com/photo-1580587771525-78b9dba3b91d?q=80&w=2070
-featured: false
+title: "Complete Guide to AI Call Center Automation"
+date: "2026-07-09"
+description: "How businesses are deploying automated voice assistants to handle high call volumes, qualify leads, and slash operational costs."
 draft: false
 ---
 
