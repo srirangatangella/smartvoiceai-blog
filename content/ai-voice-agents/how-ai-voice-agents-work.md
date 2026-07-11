@@ -1,16 +1,7 @@
 ---
-title: How AI Voice Agents Work Under the Hood
-description: An in-depth technical analysis of latency reduction, Speech-to-Text (STT), Large Language Models (LLM), and Text-to-Speech (TTS) pipelines.
-date: 2026-07-10
-author: Smart Voice AI
-category: AI Voice Agents
-tags:
-  - Voice AI
-  - LLM
-  - Tech Architecture
-  - Latency
-image: https://images.unsplash.com/photo-1612444530582-fc66183b16f7?q=80&w=800&auto=format&fit=crop
-featured: true
+title: "How AI Voice Agents Work Under the Hood"
+date: "2026-07-10"
+description: "An in-depth technical analysis of latency reduction, Speech-to-Text (STT), Large Language Models (LLM), and Text-to-Speech (TTS) pipelines."
 draft: false
 ---
 
