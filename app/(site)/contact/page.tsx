@@ -22,6 +22,8 @@ export default function ContactPage() {
         title={<>Book your <span className="gradient-text">free demo</span></>}
         description="Tell us about your business and we'll build a custom AI assistant demo for your niche — free. Prefer to talk now? WhatsApp or email us directly."
         showDemo={false}
+        primaryLabel="Get My Free Demo"
+        primaryHref="#contact"
       />
 
       <section className="section" id="contact">

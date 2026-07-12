@@ -25,9 +25,15 @@ export default function PageHero({
       <h1>{title}</h1>
       <p>{description}</p>
       <div className="hero-btns">
-        <Link href={primaryHref} className="btn btn-primary">
-          {primaryLabel} <ArrowRight className="h-4 w-4" />
-        </Link>
+        {primaryHref.startsWith("#") ? (
+          <a href={primaryHref} className="btn btn-primary">
+            {primaryLabel} <ArrowRight className="h-4 w-4" />
+          </a>
+        ) : (
+          <Link href={primaryHref} className="btn btn-primary">
+            {primaryLabel} <ArrowRight className="h-4 w-4" />
+          </Link>
+        )}
         {showDemo && (
           <Link href="/demo?client=apas" className="btn btn-outline">
             <Mic className="h-4 w-4" /> Try Live Demo

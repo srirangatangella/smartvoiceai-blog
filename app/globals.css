@@ -345,6 +345,14 @@ input:focus, select:focus {
   background: rgba(0, 212, 255, 0.05);
 }
 
+/* Native dropdown options — force a dark popup so the text is readable
+   (without this, the browser renders white text on a white list). */
+select option,
+select optgroup {
+  background-color: #0a0a0c;
+  color: #ffffff;
+}
+
 .submit-btn {
   width: 100%;
   padding: 18px;
