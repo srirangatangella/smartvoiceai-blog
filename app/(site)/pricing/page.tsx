@@ -101,10 +101,45 @@ export default function PricingPage() {
             </div>
           ))}
         </div>
-        <p className="text-center text-xs text-gray-500 mt-8">
-          Plans are indicative packages — final pricing is tailored to your call volume and
-          integrations. Update these tiers with your published rates when ready.
+        <p className="text-center text-sm text-gray-400 mt-8">
+          Every engagement is scoped to your call volume, integrations, and compliance needs — book a
+          free consultation and we&apos;ll give you a clear, fixed quote. No per-minute surprises.
         </p>
+      </section>
+
+      {/* ROI comparison */}
+      <section className="split">
+        <div>
+          <span className="eyebrow" style={{ marginBottom: 18 }}>The math</span>
+          <h2>A fraction of the cost of a front-desk hire</h2>
+          <p className="lead">
+            A full-time receptionist runs roughly $2,800–$5,800 a month once you add salary, benefits,
+            training, and cover for sick days and holidays — and still only works one shift. Your AI
+            assistant answers every call, 24/7, for a fraction of that.
+          </p>
+          <ul className="benefit-list">
+            <li><Check className="h-5 w-5" /> Answers 100% of calls — nights, weekends, holidays</li>
+            <li><Check className="h-5 w-5" /> No salary, benefits, training, or turnover</li>
+            <li><Check className="h-5 w-5" /> Handles many calls at once during spikes</li>
+            <li><Check className="h-5 w-5" /> One booked deal or recovered patient can cover a month</li>
+          </ul>
+        </div>
+        <div className="split-visual">
+          <div className="benefit-list" style={{ gap: 22 }}>
+            <div>
+              <div className="text-3xl font-extrabold text-primary">$2,800–5,800</div>
+              <p className="text-sm text-gray-400">/mo — a typical fully-loaded receptionist</p>
+            </div>
+            <div>
+              <div className="text-3xl font-extrabold text-primary">24/7</div>
+              <p className="text-sm text-gray-400">your assistant works every hour, every day</p>
+            </div>
+            <div>
+              <div className="text-3xl font-extrabold text-primary">Fixed quote</div>
+              <p className="text-sm text-gray-400">scoped on a free call — no surprises</p>
+            </div>
+          </div>
+        </div>
       </section>
 
       <Faq faqs={faqs} title="Pricing FAQs" />
