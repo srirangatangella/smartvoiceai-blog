@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import Vapi from "@vapi-ai/web";
+import type VapiType from "@vapi-ai/web";
 import { Mic, PhoneOff, Loader2, ArrowLeft } from "lucide-react";
 
 // Public (browser-safe) VAPI key + the assistant that answers the web experience.
@@ -18,31 +18,39 @@ function TalkExperience() {
   const name = params.get("name") || "";
   const industry = params.get("industry") || "";
 
-  const vapiRef = useRef<Vapi | null>(null);
+  const vapiRef = useRef<VapiType | null>(null);
+  const [ready, setReady] = useState(false);
   const [state, setState] = useState<CallState>("idle");
   const [speaking, setSpeaking] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const vapi = new Vapi(PUBLIC_KEY);
-    vapiRef.current = vapi;
-
-    vapi.on("call-start", () => setState("active"));
-    vapi.on("call-end", () => {
-      setState("ended");
-      setSpeaking(false);
-    });
-    vapi.on("speech-start", () => setSpeaking(true));
-    vapi.on("speech-end", () => setSpeaking(false));
-    vapi.on("error", (e: unknown) => {
-      console.error("Vapi error:", e);
-      setError("Something went wrong starting the call. Please refresh and try again.");
-      setState("error");
-    });
+    let cancelled = false;
+    // Load the browser voice SDK only on the client (never during SSR/build).
+    (async () => {
+      const { default: Vapi } = await import("@vapi-ai/web");
+      if (cancelled) return;
+      const vapi = new Vapi(PUBLIC_KEY);
+      vapiRef.current = vapi;
+      vapi.on("call-start", () => setState("active"));
+      vapi.on("call-end", () => {
+        setState("ended");
+        setSpeaking(false);
+      });
+      vapi.on("speech-start", () => setSpeaking(true));
+      vapi.on("speech-end", () => setSpeaking(false));
+      vapi.on("error", (e: unknown) => {
+        console.error("Vapi error:", e);
+        setError("Something went wrong starting the call. Please refresh and try again.");
+        setState("error");
+      });
+      setReady(true);
+    })();
 
     return () => {
+      cancelled = true;
       try {
-        vapi.stop();
+        vapiRef.current?.stop();
       } catch {}
       vapiRef.current = null;
     };
@@ -104,8 +112,8 @@ function TalkExperience() {
         </div>
 
         {state !== "active" && state !== "connecting" ? (
-          <button className="btn btn-primary talk-btn" onClick={start}>
-            <Mic className="h-5 w-5" /> {state === "ended" ? "Talk again" : "Start the call"}
+          <button className="btn btn-primary talk-btn" onClick={start} disabled={!ready}>
+            <Mic className="h-5 w-5" /> {!ready ? "Preparing…" : state === "ended" ? "Talk again" : "Start the call"}
           </button>
         ) : state === "connecting" ? (
           <button className="btn btn-primary talk-btn" disabled>
