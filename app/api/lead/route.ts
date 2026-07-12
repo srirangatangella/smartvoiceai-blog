@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { saveLead } from "@/lib/db";
 import { sendLeadNotification } from "@/lib/email";
+import { triggerOutboundCall } from "@/lib/vapi";
 
 export const runtime = "nodejs";
 
@@ -40,18 +41,28 @@ export async function POST(request: Request) {
     userAgent: request.headers.get("user-agent") || undefined,
   };
 
-  // Run all delivery channels; don't let one failure block the others.
-  // Each returns `false` when its integration isn't configured, `true` on success.
-  const results = await Promise.allSettled([
-    saveLead(lead),
-    sendLeadNotification(lead as unknown as Record<string, string>),
-    forwardToWebhook(lead),
+  // Capture channels decide the response; the speed-to-lead call is best-effort
+  // and never blocks lead capture. All run in parallel so the call fires fast.
+  const [capture, call] = await Promise.all([
+    Promise.allSettled([
+      saveLead(lead),
+      sendLeadNotification(lead as unknown as Record<string, string>),
+      forwardToWebhook(lead),
+    ]),
+    triggerOutboundCall(lead).catch((e) => {
+      console.error("VAPI speed-to-lead call errored:", e);
+      return false;
+    }),
   ]);
 
-  const delivered = results.some((r) => r.status === "fulfilled" && r.value === true);
-  const failed = results.some((r) => r.status === "rejected");
+  if (call === true) {
+    console.log(`Speed-to-lead: outbound call queued for ${lead.name} (${lead.mobile}).`);
+  }
 
-  results.forEach((r, i) => {
+  const delivered = capture.some((r) => r.status === "fulfilled" && r.value === true);
+  const failed = capture.some((r) => r.status === "rejected");
+
+  capture.forEach((r, i) => {
     if (r.status === "rejected") {
       console.error(`Lead delivery channel ${i} failed:`, r.reason);
     }
@@ -83,7 +94,7 @@ async function forwardToWebhook(lead: Record<string, unknown>): Promise<boolean>
   const res = await fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(lead),
+    body: JSON.stringify({ ...lead, receivedAt: new Date().toISOString() }),
   });
   return res.ok;
 }
