@@ -164,6 +164,14 @@ export async function consumeExperience(token: string): Promise<boolean> {
   return rows.length > 0;
 }
 
+/** Cache the generated business profile so it's built once per session. */
+export async function updateExperienceProfile(token: string, profile: string): Promise<void> {
+  const client = getClient();
+  if (!client) return;
+  await ensureSchema(client);
+  await client`UPDATE experiences SET profile = ${profile} WHERE token = ${token}`;
+}
+
 export async function endExperience(token: string, seconds: number): Promise<void> {
   const client = getClient();
   if (!client) return;

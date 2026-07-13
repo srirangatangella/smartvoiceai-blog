@@ -33,11 +33,13 @@ export default function ExperienceClient({
   initialAllowed,
   businessName,
   industry,
+  profile = "",
 }: {
   token: string;
   initialAllowed: boolean;
   businessName: string;
   industry: string;
+  profile?: string;
 }) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const vapiRef = useRef<any>(null);
@@ -64,7 +66,7 @@ export default function ExperienceClient({
         assistant: ASSISTANT_ID,
         assistantOverrides: {
           maxDurationSeconds: MAX_SECONDS,
-          variableValues: { business: businessName, industry },
+          variableValues: { business: businessName, industry, profile },
         },
         config: {
           position: "bottom",
