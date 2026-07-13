@@ -78,6 +78,11 @@ export default function LeadForm({ source = "Website" }: { source?: string }) {
           <input id="company" type="text" value={form.company} onChange={onChange} placeholder="Company name" />
         </div>
         <div className="input-group">
+          <label htmlFor="website">Website</label>
+          <input id="website" type="url" value={form.website} onChange={onChange} placeholder="https://yourbusiness.com" />
+          <p className="text-xs text-gray-500 mt-1.5">We&apos;ll build you a live AI assistant based on your site.</p>
+        </div>
+        <div className="input-group">
           <label htmlFor="industry">Industry</label>
           <select id="industry" value={form.industry} onChange={onChange}>
             <option value="">Select…</option>

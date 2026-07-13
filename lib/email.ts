@@ -1,5 +1,7 @@
 import { Resend } from "resend";
+import nodemailer from "nodemailer";
 import { siteConfig } from "./site";
+import type { LeadInput } from "./db";
 
 /**
  * Email via Resend. Set RESEND_API_KEY in your environment.
@@ -51,4 +53,94 @@ function escapeHtml(s: string) {
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
+}
+
+/* ─────────────────────────────────────────────────────────────
+   SMTP (e.g. Zoho) — customer-facing welcome email with a link to
+   the browser voice experience (/talk). Works globally, no phone
+   number needed. Env: SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS,
+   SMTP_SECURE (default true), SMTP_FROM.
+   ───────────────────────────────────────────────────────────── */
+
+let transporter: nodemailer.Transporter | null = null;
+
+function getTransporter() {
+  if (transporter) return transporter;
+  const host = process.env.SMTP_HOST;
+  const user = process.env.SMTP_USER;
+  const pass = process.env.SMTP_PASS;
+  if (!host || !user || !pass) return null;
+  transporter = nodemailer.createTransport({
+    host,
+    port: Number(process.env.SMTP_PORT || 465),
+    secure: process.env.SMTP_SECURE !== "false",
+    auth: { user, pass },
+  });
+  return transporter;
+}
+
+export function smtpConfigured() {
+  return Boolean(process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS);
+}
+
+function firstName(name?: string) {
+  return (name || "").trim().split(/\s+/)[0] || "there";
+}
+
+/** Personalized link to the browser voice experience. */
+export function talkLink(lead: LeadInput) {
+  const q = new URLSearchParams();
+  if (lead.name) q.set("name", firstName(lead.name));
+  if (lead.industry) q.set("industry", lead.industry);
+  return `${siteConfig.url}/talk?${q.toString()}`;
+}
+
+/** Sends the lead a branded email with TWO actions: (1) talk to a live sample
+ *  assistant for their business, (2) book a live demo. `experienceUrl` is the
+ *  personalized one-time sample link; falls back to the generic /talk page. */
+export async function sendLeadWelcomeWithLink(lead: LeadInput, experienceUrl?: string): Promise<boolean> {
+  const t = getTransporter();
+  if (!t) return false;
+  const link1 = experienceUrl || talkLink(lead);
+  const link2 = `${siteConfig.url}/contact`;
+  const from = process.env.SMTP_FROM || `Smart Voice AI <${process.env.SMTP_USER}>`;
+  const fn = firstName(lead.name);
+
+  await t.sendMail({
+    from,
+    to: lead.email,
+    replyTo: siteConfig.email,
+    subject: `${fn}, hear a live AI assistant for your business →`,
+    text: `Hi ${fn},\n\nThanks for reaching out to Smart Voice AI.\n\n1) Talk to a live AI assistant for your business (2-min sample, in your browser):\n${link1}\n\n2) Book a live demo with our team:\n${link2}\n\n— Smart Voice AI\n${siteConfig.email}`,
+    html: `
+      <div style="font-family:Arial,Helvetica,sans-serif;background:#f4f6f8;padding:28px">
+        <div style="max-width:520px;margin:0 auto;background:#fff;border-radius:14px;overflow:hidden;border:1px solid #e5e7eb">
+          <div style="background:#0b2a33;padding:22px 28px;color:#fff;font-size:18px;font-weight:800">
+            SMART VOICE <span style="color:#00d4ff">AI</span>
+          </div>
+          <div style="padding:28px">
+            <h1 style="margin:0 0 12px;font-size:22px;color:#111">Hi ${escapeHtml(fn)}, want to hear it for yourself?</h1>
+            <p style="color:#444;line-height:1.6;font-size:15px;margin:0 0 22px">
+              Two quick things — both work right in your browser, no phone call, nothing to install:
+            </p>
+            <p style="margin:0 0 10px;font-weight:700;color:#111">1 · Talk to a live AI assistant for your business</p>
+            <a href="${link1}" style="display:inline-block;background:#00d4ff;color:#00131a;text-decoration:none;font-weight:800;padding:13px 26px;border-radius:40px;font-size:15px;margin-bottom:22px">
+              🎙️ Try the 2-minute sample
+            </a>
+            <p style="margin:8px 0 10px;font-weight:700;color:#111">2 · Ready to go further?</p>
+            <a href="${link2}" style="display:inline-block;background:#0b2a33;color:#fff;text-decoration:none;font-weight:800;padding:13px 26px;border-radius:40px;font-size:15px">
+              📅 Book a live demo
+            </a>
+            <p style="color:#888;font-size:13px;margin:24px 0 0">
+              Trouble with the buttons? Sample: <a href="${link1}" style="color:#00a3c4">${link1}</a>
+            </p>
+            <p style="color:#444;font-size:14px;margin:20px 0 0">— Team Smart Voice AI</p>
+          </div>
+          <div style="padding:16px 28px;background:#fafafa;color:#999;font-size:12px;border-top:1px solid #eee">
+            ${siteConfig.email} · ${siteConfig.url.replace("https://", "")}
+          </div>
+        </div>
+      </div>`,
+  });
+  return true;
 }
