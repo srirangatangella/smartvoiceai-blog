@@ -87,6 +87,44 @@ function firstName(name?: string) {
   return (name || "").trim().split(/\s+/)[0] || "there";
 }
 
+/** Notifies YOU of a new demo booking (via SMTP if set, else Resend). */
+export async function sendBookingNotification(b: {
+  name?: string;
+  email?: string;
+  phone?: string;
+  preferredTime?: string;
+  notes?: string;
+  source?: string;
+}): Promise<boolean> {
+  const to = NOTIFY_TO;
+  const rows = [
+    ["Name", b.name],
+    ["Email", b.email],
+    ["Phone", b.phone],
+    ["Preferred time", b.preferredTime],
+    ["Notes", b.notes],
+    ["Source", b.source],
+  ]
+    .filter(([, v]) => v)
+    .map(([k, v]) => `<tr><td style="padding:6px 12px;font-weight:600">${k}</td><td style="padding:6px 12px">${escapeHtml(String(v))}</td></tr>`)
+    .join("");
+  const html = `<div style="font-family:Arial,sans-serif;max-width:560px">
+    <h2 style="color:#00a3c4">📅 New demo booking</h2>
+    <table style="border-collapse:collapse;border:1px solid #eee">${rows}</table></div>`;
+  const subject = `📅 Demo booking: ${b.name || "New lead"}`;
+
+  const t = getTransporter();
+  if (t) {
+    await t.sendMail({ from: process.env.SMTP_FROM || `Smart Voice AI <${process.env.SMTP_USER}>`, to, replyTo: b.email || undefined, subject, html });
+    return true;
+  }
+  if (resend) {
+    await resend.emails.send({ from: FROM, to, replyTo: b.email || undefined, subject, html });
+    return true;
+  }
+  return false;
+}
+
 /** Personalized link to the browser voice experience. */
 export function talkLink(lead: LeadInput) {
   const q = new URLSearchParams();

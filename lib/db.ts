@@ -64,6 +64,19 @@ async function ensureSchema(client: ReturnType<typeof postgres>) {
           created_at       TIMESTAMPTZ NOT NULL DEFAULT now()
         );
       `;
+      // Demo bookings captured by the AI booker (or the site).
+      await client`
+        CREATE TABLE IF NOT EXISTS bookings (
+          id             BIGSERIAL PRIMARY KEY,
+          name           TEXT,
+          email          TEXT,
+          phone          TEXT,
+          preferred_time TEXT,
+          notes          TEXT,
+          source         TEXT,
+          created_at     TIMESTAMPTZ NOT NULL DEFAULT now()
+        );
+      `;
     })();
   }
   return initPromise;
@@ -159,6 +172,86 @@ export async function endExperience(token: string, seconds: number): Promise<voi
     UPDATE experiences SET ended_at = now(), duration_seconds = ${Math.round(seconds)}
     WHERE token = ${token}
   `;
+}
+
+/* ─────────────── Bookings ─────────────── */
+
+export interface BookingInput {
+  name?: string;
+  email?: string;
+  phone?: string;
+  preferredTime?: string;
+  notes?: string;
+  source?: string;
+}
+
+export async function saveBooking(b: BookingInput): Promise<boolean> {
+  const client = getClient();
+  if (!client) return false;
+  await ensureSchema(client);
+  await client`
+    INSERT INTO bookings (name, email, phone, preferred_time, notes, source)
+    VALUES (${b.name ?? null}, ${b.email ?? null}, ${b.phone ?? null},
+            ${b.preferredTime ?? null}, ${b.notes ?? null}, ${b.source ?? "ai_booker"})
+  `;
+  return true;
+}
+
+/* ─────────────── Dashboard reads (used by /admin) ─────────────── */
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function safeQuery<T = any>(fn: (client: ReturnType<typeof postgres>) => Promise<T>, fallback: T): Promise<T> {
+  const client = getClient();
+  if (!client) return fallback;
+  try {
+    await ensureSchema(client);
+    return await fn(client);
+  } catch (e) {
+    console.error("dashboard query failed:", e);
+    return fallback;
+  }
+}
+
+export function dbConfigured() {
+  return Boolean(process.env.DATABASE_URL);
+}
+
+export async function getRecentLeads(limit = 100) {
+  return safeQuery(
+    (c) => c`SELECT name, email, mobile, company, website, industry, message, source, created_at
+             FROM leads ORDER BY created_at DESC LIMIT ${limit}`,
+    []
+  );
+}
+
+export async function getRecentBookings(limit = 100) {
+  return safeQuery(
+    (c) => c`SELECT name, email, phone, preferred_time, notes, source, created_at
+             FROM bookings ORDER BY created_at DESC LIMIT ${limit}`,
+    []
+  );
+}
+
+export async function getExperienceStats() {
+  return safeQuery(
+    async (c) => {
+      const [row] = await c`SELECT count(*)::int AS total,
+        count(*) FILTER (WHERE used)::int AS used,
+        coalesce(round(avg(duration_seconds) FILTER (WHERE duration_seconds IS NOT NULL)),0)::int AS avg_seconds
+        FROM experiences`;
+      return row;
+    },
+    { total: 0, used: 0, avg_seconds: 0 }
+  );
+}
+
+/** Prospects table is created by the scraper; may not exist if a separate DB is used. */
+export async function getProspects(limit = 100) {
+  return safeQuery(
+    (c) => c`SELECT name, email, phone, city, country, call_status, created_at
+             FROM prospects ORDER BY created_at DESC LIMIT ${limit}`,
+    []
+  );
 }
 
 /** Returns true if stored, false if DB not configured. Idempotent on email. */
