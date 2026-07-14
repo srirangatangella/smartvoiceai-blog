@@ -33,7 +33,7 @@ export default function SiteNav() {
         <Link href="/demo?client=apas" className="btn btn-outline py-2 px-5">
           <Play className="h-4 w-4 fill-white" /> Live Demo
         </Link>
-        <Link href="/contact" className="btn btn-primary py-2 px-5">
+        <Link href="/book" className="btn btn-primary py-2 px-5">
           Book a Call
         </Link>
       </div>
@@ -65,7 +65,7 @@ export default function SiteNav() {
               <Play className="h-4 w-4 fill-white" /> Live Demo
             </Link>
             <Link
-              href="/contact"
+              href="/book"
               onClick={() => setOpen(false)}
               className="btn btn-primary justify-center py-2.5"
             >

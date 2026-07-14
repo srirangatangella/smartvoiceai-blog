@@ -176,8 +176,8 @@ export async function sendLeadWelcomeWithLink(lead: LeadInput, experienceUrl?: s
   if (!t) return false;
   const fn = firstName(lead.name);
   const link1 = experienceUrl || talkLink(lead);
-  // Link 2 = the AI voice booker (Assistant B on /talk) — qualifies and books.
-  const link2 = `${siteConfig.url}/talk?name=${encodeURIComponent(fn)}`;
+  // Link 2 = direct self-serve booking (pick a slot) — fastest, no AI lag.
+  const link2 = `${siteConfig.url}/book`;
   const from = process.env.SMTP_FROM || `Smart Voice AI <${process.env.SMTP_USER}>`;
 
   await t.sendMail({
@@ -185,7 +185,7 @@ export async function sendLeadWelcomeWithLink(lead: LeadInput, experienceUrl?: s
     to: lead.email,
     replyTo: siteConfig.email,
     subject: `${fn}, hear a live AI assistant for your business →`,
-    text: `Hi ${fn},\n\nThanks for reaching out to Smart Voice AI.\n\n1) Talk to a live AI assistant for your business (2-min sample, in your browser):\n${link1}\n\n2) Ready to book a demo? Talk to our AI booker and it'll schedule you in:\n${link2}\n\n— Smart Voice AI\n${siteConfig.email}`,
+    text: `Hi ${fn},\n\nThanks for reaching out to Smart Voice AI.\n\n1) Talk to a live AI assistant for your business (2-min sample, in your browser):\n${link1}\n\n2) Ready to book a demo? Pick a time on our calendar:\n${link2}\n\n— Smart Voice AI\n${siteConfig.email}`,
     html: `
       <div style="font-family:Arial,Helvetica,sans-serif;background:#f4f6f8;padding:28px">
         <div style="max-width:520px;margin:0 auto;background:#fff;border-radius:14px;overflow:hidden;border:1px solid #e5e7eb">
@@ -203,7 +203,7 @@ export async function sendLeadWelcomeWithLink(lead: LeadInput, experienceUrl?: s
             </a>
             <p style="margin:8px 0 10px;font-weight:700;color:#111">2 · Ready to book a demo?</p>
             <a href="${link2}" style="display:inline-block;background:#0b2a33;color:#fff;text-decoration:none;font-weight:800;padding:13px 26px;border-radius:40px;font-size:15px">
-              🎙️ Talk to our AI to schedule
+              📅 Pick a time on our calendar
             </a>
             <p style="color:#888;font-size:13px;margin:24px 0 0">
               Trouble with the buttons? Sample: <a href="${link1}" style="color:#00a3c4">${link1}</a>
