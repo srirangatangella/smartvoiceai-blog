@@ -67,6 +67,11 @@ function TalkExperience() {
       try {
         vapiRef.current?.stop?.();
       } catch {}
+      // The widget injects a floating button into <body>; remove it on exit
+      // so it doesn't linger on the next page.
+      document
+        .querySelectorAll('[class*="vapi-btn"], [id^="vapi-"], [class*="vapi-support"]')
+        .forEach((el) => el.remove());
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

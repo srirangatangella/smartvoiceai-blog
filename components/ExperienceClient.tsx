@@ -139,6 +139,9 @@ export default function ExperienceClient({
         vapiRef.current?.stop?.();
       } catch {}
       if (timerRef.current) clearInterval(timerRef.current);
+      document
+        .querySelectorAll('[class*="vapi-btn"], [id^="vapi-"], [class*="vapi-support"]')
+        .forEach((el) => el.remove());
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
