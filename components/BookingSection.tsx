@@ -7,7 +7,7 @@ import { siteConfig } from "@/lib/site";
  */
 export default function BookingSection() {
   const url = siteConfig.bookingUrl;
-  const isPlaceholder = url.includes("smartvoiceai/30min"); // default placeholder pattern
+  const isPlaceholder = !url; // no URL configured yet
 
   return (
     <div className="section" id="book">

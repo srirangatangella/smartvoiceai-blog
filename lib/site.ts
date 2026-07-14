@@ -19,7 +19,8 @@ export const siteConfig = {
   phoneRaw: "+916303919752",
   whatsapp: "https://wa.me/916303919752",
   // Booking link (Cal.com / Calendly). Set NEXT_PUBLIC_BOOKING_URL in your env.
-  bookingUrl: process.env.NEXT_PUBLIC_BOOKING_URL || "https://cal.com/smartvoiceai/30min",
+  // Empty when unset — the booking UI treats empty as "not configured".
+  bookingUrl: process.env.NEXT_PUBLIC_BOOKING_URL || "",
   locales: ["en_US", "en_IN"],
   markets: ["United States", "India"],
   social: {

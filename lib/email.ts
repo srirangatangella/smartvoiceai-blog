@@ -125,10 +125,9 @@ export async function sendBookingNotification(b: {
   return false;
 }
 
-/** True only when a real Cal.com/Calendly link is configured (not the placeholder). */
+/** True when a Cal.com/Calendly link is configured. */
 export function bookingUrlConfigured() {
-  const u = siteConfig.bookingUrl;
-  return Boolean(u) && !u.includes("smartvoiceai/30min");
+  return Boolean(siteConfig.bookingUrl);
 }
 
 /** After the AI booker captures details, email the LEAD your scheduler link to
