@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { saveBooking } from "@/lib/db";
-import { sendBookingNotification } from "@/lib/email";
+import { sendBookingNotification, sendBookingLinkToLead } from "@/lib/email";
 
 export const runtime = "nodejs";
 
@@ -44,6 +44,11 @@ export async function POST(req: Request) {
     saveBooking(booking),
     sendBookingNotification(booking).catch((e) => {
       console.error("Booking notify failed:", e);
+      return false;
+    }),
+    // Email the lead your scheduler link to pick their exact slot.
+    sendBookingLinkToLead(booking).catch((e) => {
+      console.error("Booking link to lead failed:", e);
       return false;
     }),
   ]);

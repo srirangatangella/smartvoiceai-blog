@@ -125,6 +125,42 @@ export async function sendBookingNotification(b: {
   return false;
 }
 
+/** True only when a real Cal.com/Calendly link is configured (not the placeholder). */
+export function bookingUrlConfigured() {
+  const u = siteConfig.bookingUrl;
+  return Boolean(u) && !u.includes("smartvoiceai/30min");
+}
+
+/** After the AI booker captures details, email the LEAD your scheduler link to
+ *  pick their exact slot. No-ops if SMTP or the booking URL isn't configured. */
+export async function sendBookingLinkToLead(b: { name?: string; email?: string }): Promise<boolean> {
+  if (!b.email || !bookingUrlConfigured()) return false;
+  const t = getTransporter();
+  if (!t) return false;
+  const fn = firstName(b.name);
+  const url = siteConfig.bookingUrl;
+  await t.sendMail({
+    from: process.env.SMTP_FROM || `Smart Voice AI <${process.env.SMTP_USER}>`,
+    to: b.email,
+    replyTo: siteConfig.email,
+    subject: `${fn}, pick your demo time →`,
+    text: `Hi ${fn},\n\nThanks for booking a demo with Smart Voice AI. Pick the exact time that works for you here:\n${url}\n\n— Smart Voice AI`,
+    html: `
+      <div style="font-family:Arial,Helvetica,sans-serif;background:#f4f6f8;padding:28px">
+        <div style="max-width:520px;margin:0 auto;background:#fff;border-radius:14px;overflow:hidden;border:1px solid #e5e7eb">
+          <div style="background:#0b2a33;padding:22px 28px;color:#fff;font-size:18px;font-weight:800">SMART VOICE <span style="color:#00d4ff">AI</span></div>
+          <div style="padding:28px">
+            <h1 style="margin:0 0 12px;font-size:22px;color:#111">Hi ${escapeHtml(fn)}, pick your demo time</h1>
+            <p style="color:#444;line-height:1.6;font-size:15px;margin:0 0 22px">Thanks for booking a demo! Choose the exact time that suits you:</p>
+            <a href="${url}" style="display:inline-block;background:#00d4ff;color:#00131a;text-decoration:none;font-weight:800;padding:14px 28px;border-radius:40px;font-size:16px">📅 Choose my time</a>
+            <p style="color:#888;font-size:13px;margin:22px 0 0">Or open: <a href="${url}" style="color:#00a3c4">${url}</a></p>
+          </div>
+        </div>
+      </div>`,
+  });
+  return true;
+}
+
 /** Personalized link to the browser voice experience. */
 export function talkLink(lead: LeadInput) {
   const q = new URLSearchParams();
@@ -139,17 +175,18 @@ export function talkLink(lead: LeadInput) {
 export async function sendLeadWelcomeWithLink(lead: LeadInput, experienceUrl?: string): Promise<boolean> {
   const t = getTransporter();
   if (!t) return false;
-  const link1 = experienceUrl || talkLink(lead);
-  const link2 = `${siteConfig.url}/contact`;
-  const from = process.env.SMTP_FROM || `Smart Voice AI <${process.env.SMTP_USER}>`;
   const fn = firstName(lead.name);
+  const link1 = experienceUrl || talkLink(lead);
+  // Link 2 = the AI voice booker (Assistant B on /talk) — qualifies and books.
+  const link2 = `${siteConfig.url}/talk?name=${encodeURIComponent(fn)}`;
+  const from = process.env.SMTP_FROM || `Smart Voice AI <${process.env.SMTP_USER}>`;
 
   await t.sendMail({
     from,
     to: lead.email,
     replyTo: siteConfig.email,
     subject: `${fn}, hear a live AI assistant for your business →`,
-    text: `Hi ${fn},\n\nThanks for reaching out to Smart Voice AI.\n\n1) Talk to a live AI assistant for your business (2-min sample, in your browser):\n${link1}\n\n2) Book a live demo with our team:\n${link2}\n\n— Smart Voice AI\n${siteConfig.email}`,
+    text: `Hi ${fn},\n\nThanks for reaching out to Smart Voice AI.\n\n1) Talk to a live AI assistant for your business (2-min sample, in your browser):\n${link1}\n\n2) Ready to book a demo? Talk to our AI booker and it'll schedule you in:\n${link2}\n\n— Smart Voice AI\n${siteConfig.email}`,
     html: `
       <div style="font-family:Arial,Helvetica,sans-serif;background:#f4f6f8;padding:28px">
         <div style="max-width:520px;margin:0 auto;background:#fff;border-radius:14px;overflow:hidden;border:1px solid #e5e7eb">
@@ -165,9 +202,9 @@ export async function sendLeadWelcomeWithLink(lead: LeadInput, experienceUrl?: s
             <a href="${link1}" style="display:inline-block;background:#00d4ff;color:#00131a;text-decoration:none;font-weight:800;padding:13px 26px;border-radius:40px;font-size:15px;margin-bottom:22px">
               🎙️ Try the 2-minute sample
             </a>
-            <p style="margin:8px 0 10px;font-weight:700;color:#111">2 · Ready to go further?</p>
+            <p style="margin:8px 0 10px;font-weight:700;color:#111">2 · Ready to book a demo?</p>
             <a href="${link2}" style="display:inline-block;background:#0b2a33;color:#fff;text-decoration:none;font-weight:800;padding:13px 26px;border-radius:40px;font-size:15px">
-              📅 Book a live demo
+              🎙️ Talk to our AI to schedule
             </a>
             <p style="color:#888;font-size:13px;margin:24px 0 0">
               Trouble with the buttons? Sample: <a href="${link1}" style="color:#00a3c4">${link1}</a>
