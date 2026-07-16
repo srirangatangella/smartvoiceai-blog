@@ -77,6 +77,14 @@ async function ensureSchema(client: ReturnType<typeof postgres>) {
           created_at     TIMESTAMPTZ NOT NULL DEFAULT now()
         );
       `;
+      // Opt-outs, bounces, and complaints — never email these again.
+      await client`
+        CREATE TABLE IF NOT EXISTS suppressions (
+          email       TEXT PRIMARY KEY,
+          reason      TEXT,
+          created_at  TIMESTAMPTZ NOT NULL DEFAULT now()
+        );
+      `;
     })();
   }
   return initPromise;
@@ -191,6 +199,28 @@ export interface BookingInput {
   preferredTime?: string;
   notes?: string;
   source?: string;
+}
+
+/* ─────────────── Suppressions (opt-out / bounce / complaint) ─────────────── */
+
+/** Add an email to the suppression list. Idempotent. */
+export async function addSuppression(email: string, reason: string): Promise<boolean> {
+  const client = getClient();
+  if (!client) return false;
+  await ensureSchema(client);
+  await client`
+    INSERT INTO suppressions (email, reason) VALUES (${email.toLowerCase()}, ${reason})
+    ON CONFLICT (email) DO NOTHING
+  `;
+  return true;
+}
+
+export async function isSuppressed(email: string): Promise<boolean> {
+  const client = getClient();
+  if (!client) return false;
+  await ensureSchema(client);
+  const rows = await client`SELECT 1 FROM suppressions WHERE email = ${email.toLowerCase()} LIMIT 1`;
+  return rows.length > 0;
 }
 
 export async function saveBooking(b: BookingInput): Promise<boolean> {
