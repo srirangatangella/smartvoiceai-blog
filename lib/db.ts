@@ -64,6 +64,13 @@ async function ensureSchema(client: ReturnType<typeof postgres>) {
           created_at       TIMESTAMPTZ NOT NULL DEFAULT now()
         );
       `;
+      // Extra fields used by the /preview website demo (populated by the scraper
+      // for no-website prospects). One token drives both the voice + website demo.
+      await client`ALTER TABLE experiences ADD COLUMN IF NOT EXISTS rating NUMERIC`;
+      await client`ALTER TABLE experiences ADD COLUMN IF NOT EXISTS reviews INT`;
+      await client`ALTER TABLE experiences ADD COLUMN IF NOT EXISTS address TEXT`;
+      await client`ALTER TABLE experiences ADD COLUMN IF NOT EXISTS city TEXT`;
+      await client`ALTER TABLE experiences ADD COLUMN IF NOT EXISTS phone TEXT`;
       // Demo bookings captured by the AI booker (or the site).
       await client`
         CREATE TABLE IF NOT EXISTS bookings (
@@ -170,6 +177,31 @@ export async function consumeExperience(token: string): Promise<boolean> {
     RETURNING token
   `;
   return rows.length > 0;
+}
+
+export interface PreviewRow {
+  token: string;
+  business_name: string | null;
+  industry: string | null;
+  website: string | null;
+  profile: string | null;
+  rating: number | null;
+  reviews: number | null;
+  address: string | null;
+  city: string | null;
+  phone: string | null;
+}
+
+/** Read the data needed to render a /preview website demo. */
+export async function getPreview(token: string): Promise<PreviewRow | null> {
+  const client = getClient();
+  if (!client) return null;
+  await ensureSchema(client);
+  const rows = await client`
+    SELECT token, business_name, industry, website, profile, rating, reviews, address, city, phone
+    FROM experiences WHERE token = ${token}
+  `;
+  return (rows[0] as PreviewRow) ?? null;
 }
 
 /** Cache the generated business profile so it's built once per session. */
