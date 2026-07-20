@@ -1083,106 +1083,109 @@ footer {
 }
 
 /* TALK (web voice experience) */
-.talk-wrap {
+/* ---- Voice call screen (/experience) — mobile-first ---- */
+.call-screen {
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px;
+  padding: 20px;
   position: relative;
-  background: radial-gradient(circle at 50% 0%, rgba(0, 212, 255, 0.08), transparent 60%), var(--bg);
+  background: radial-gradient(circle at 50% 0%, rgba(0, 212, 255, 0.12), transparent 55%), var(--bg);
 }
-.talk-back {
+.call-back {
   position: absolute;
-  top: 24px;
-  left: 24px;
+  top: 20px;
+  left: 20px;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  font-weight: 700;
-  color: #fff;
+  gap: 6px;
+  font-weight: 600;
+  color: #cbd5e1;
   font-size: 14px;
-}
-.talk-back:hover {
-  color: var(--primary);
-}
-.talk-card {
-  width: 100%;
-  max-width: 480px;
-  text-align: center;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+  background: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--glass-border);
-  border-radius: 28px;
-  padding: 48px 32px;
+  border-radius: 40px;
+  padding: 8px 14px;
 }
-.talk-eyebrow {
-  font-size: 12px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--primary);
-  font-weight: 700;
-  margin-bottom: 14px;
+.call-back:hover { color: #fff; }
+.call-card {
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015));
+  border: 1px solid var(--glass-border);
+  border-radius: 32px;
+  padding: 44px 28px 36px;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.45);
 }
-.talk-title {
-  font-size: 34px;
-  font-weight: 800;
-  margin-bottom: 12px;
-}
-.talk-sub {
-  color: var(--text-muted);
-  line-height: 1.6;
-  margin-bottom: 32px;
-}
-.talk-orb {
-  width: 150px;
-  height: 150px;
-  margin: 0 auto 28px;
+.call-avatar {
+  width: 132px;
+  height: 132px;
+  margin: 6px auto 22px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--primary);
-  background: rgba(0, 212, 255, 0.08);
-  border: 2px solid rgba(0, 212, 255, 0.3);
   position: relative;
-  transition: 0.4s;
-}
-.talk-orb.live {
-  background: rgba(0, 212, 255, 0.14);
-  border-color: var(--primary);
-  box-shadow: 0 0 40px rgba(0, 212, 255, 0.35);
-  animation: talk-pulse 2s infinite;
-}
-@keyframes talk-pulse {
-  0%, 100% { box-shadow: 0 0 30px rgba(0, 212, 255, 0.25); }
-  50% { box-shadow: 0 0 55px rgba(0, 212, 255, 0.5); }
-}
-.talk-status {
-  min-height: 24px;
-  color: #d1d5db;
-  font-weight: 600;
-  margin-bottom: 24px;
-}
-.talk-btn {
-  width: 100%;
-  justify-content: center;
-  padding: 16px;
-  font-size: 16px;
-}
-.talk-foot {
-  font-size: 12px;
-  color: #6b7280;
-  margin-top: 20px;
-}
-.talk-link {
-  display: inline-block;
-  margin-top: 16px;
-  font-size: 14px;
-  color: var(--primary);
-}
-.talk-link:hover {
+  font-size: 52px;
+  font-weight: 800;
   color: #fff;
+  background: linear-gradient(135deg, #22d3ee, #3b82f6 55%, #6366f1);
+  box-shadow: 0 0 40px rgba(34, 211, 238, 0.35);
 }
+.call-avatar.done { background: linear-gradient(135deg, #22c55e, #16a34a); color: #fff; }
+.call-avatar.live { animation: call-glow 2s infinite; }
+@keyframes call-glow {
+  0%, 100% { box-shadow: 0 0 40px rgba(34, 211, 238, 0.35); }
+  50% { box-shadow: 0 0 70px rgba(34, 211, 238, 0.65); }
+}
+.call-ring {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid rgba(34, 211, 238, 0.55);
+  animation: call-ripple 1.8s ease-out infinite;
+  pointer-events: none;
+}
+.call-ring.r2 { animation-delay: 0.9s; }
+@keyframes call-ripple {
+  0% { transform: scale(0.85); opacity: 0.7; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+.call-name { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; }
+.call-role { color: var(--primary); font-size: 13.5px; font-weight: 600; margin-top: 4px; }
+.call-eyebrow { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); font-weight: 700; margin: 10px 0 10px; }
+.call-msg { color: var(--text-muted); line-height: 1.6; font-size: 15px; margin-bottom: 26px; }
+.call-status {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: #9ca3af; font-weight: 600; font-size: 14px;
+  margin: 18px 0 20px;
+}
+.call-status.on { color: #4ade80; }
+.call-dot { width: 8px; height: 8px; border-radius: 50%; background: #9ca3af; }
+.call-status.on .call-dot { background: #4ade80; box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.6); animation: call-pulse-dot 1.5s infinite; }
+@keyframes call-pulse-dot { 70% { box-shadow: 0 0 0 7px rgba(74, 222, 128, 0); } 100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); } }
+.call-wave { display: flex; align-items: center; justify-content: center; gap: 5px; height: 46px; margin-bottom: 8px; }
+.call-wave span { width: 5px; height: 10px; border-radius: 3px; background: var(--primary); box-shadow: 0 0 12px rgba(0, 212, 255, 0.5); animation: call-wave 1s infinite ease-in-out; }
+.call-wave.placeholder span { background: rgba(255, 255, 255, 0.14); box-shadow: none; animation: none; height: 10px; }
+@keyframes call-wave { 0%, 100% { height: 8px; } 50% { height: 38px; } }
+.call-timer { font-variant-numeric: tabular-nums; font-size: 34px; font-weight: 800; letter-spacing: 1px; color: #6b7280; margin-bottom: 26px; }
+.call-timer.on { color: #fff; }
+.call-btn {
+  width: 76px; height: 76px; border-radius: 50%; border: 0; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center; color: #fff;
+  margin: 0 auto; transition: transform 0.15s, box-shadow 0.15s;
+}
+.call-btn:hover { transform: scale(1.06); }
+.call-btn:disabled { cursor: default; }
+.call-btn.start { background: #22c55e; box-shadow: 0 0 30px rgba(34, 197, 94, 0.5); }
+.call-btn.start.busy { background: #64748b; box-shadow: none; animation: call-busy 1.2s infinite; }
+@keyframes call-busy { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
+.call-btn.end { background: #ef4444; box-shadow: 0 0 30px rgba(239, 68, 68, 0.5); }
+.call-hint { font-size: 12.5px; color: #6b7280; margin-top: 18px; line-height: 1.5; }
+.call-cta { width: 100%; justify-content: center; padding: 15px; font-size: 15px; margin-top: 8px; }
 
 /* ADMIN / CRM dashboard */
 .admin-wrap {
@@ -1393,3 +1396,20 @@ footer {
 .demo2-loading { position: fixed; inset: 0; z-index: 9999; background: rgba(3,3,5,0.92); backdrop-filter: blur(8px); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; text-align: center; padding: 24px; }
 .demo2-loading p { font-size: 20px; font-weight: 700; }
 .demo2-loading span { color: var(--text-muted); font-size: 14px; }
+
+/* ---- Legacy voice screens (/talk + experience not-found) ---- */
+.talk-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; position: relative; background: radial-gradient(circle at 50% 0%, rgba(0, 212, 255, 0.08), transparent 60%), var(--bg); }
+.talk-back { position: absolute; top: 24px; left: 24px; display: inline-flex; align-items: center; gap: 8px; font-weight: 700; color: #fff; font-size: 14px; }
+.talk-back:hover { color: var(--primary); }
+.talk-card { width: 100%; max-width: 480px; text-align: center; background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01)); border: 1px solid var(--glass-border); border-radius: 28px; padding: 48px 32px; }
+.talk-eyebrow { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); font-weight: 700; margin-bottom: 14px; }
+.talk-title { font-size: 34px; font-weight: 800; margin-bottom: 12px; }
+.talk-sub { color: var(--text-muted); line-height: 1.6; margin-bottom: 32px; }
+.talk-orb { width: 150px; height: 150px; margin: 0 auto 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary); background: rgba(0, 212, 255, 0.08); border: 2px solid rgba(0, 212, 255, 0.3); position: relative; transition: 0.4s; }
+.talk-orb.live { background: rgba(0, 212, 255, 0.14); border-color: var(--primary); box-shadow: 0 0 40px rgba(0, 212, 255, 0.35); animation: talk-pulse 2s infinite; }
+@keyframes talk-pulse { 0%, 100% { box-shadow: 0 0 30px rgba(0, 212, 255, 0.25); } 50% { box-shadow: 0 0 55px rgba(0, 212, 255, 0.5); } }
+.talk-status { min-height: 24px; color: #d1d5db; font-weight: 600; margin-bottom: 24px; }
+.talk-btn { width: 100%; justify-content: center; padding: 16px; font-size: 16px; }
+.talk-foot { font-size: 12px; color: #6b7280; margin-top: 20px; }
+.talk-link { display: inline-block; margin-top: 16px; font-size: 14px; color: var(--primary); }
+.talk-link:hover { color: #fff; }

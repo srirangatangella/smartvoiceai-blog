@@ -3,13 +3,15 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Script from "next/script";
-import { Mic, Clock, CheckCircle2 } from "lucide-react";
+import { Phone, PhoneOff, ArrowLeft, CheckCircle2 } from "lucide-react";
 
-/* Personalized sample assistant with a STRICT one-time, 2-minute cap:
+/* Personalized sample assistant, styled as a mobile phone-call screen, with a
+   STRICT one-time, 2-minute cap:
    - one-time: the server marks the token `used` on call-start (atomic);
      a used token renders the "already used" screen and never loads the widget.
-   - 2 minutes: enforced primarily by the VAPI assistant's max-duration setting
-     (set it to 120s in the VAPI dashboard), plus a client-side backup timer. */
+   - 2 minutes: enforced by the VAPI assistant's max-duration setting (120s in
+     the dashboard) plus a client-side backup timer.
+   The VAPI CDN widget button is created off-screen; our Call button drives it. */
 
 declare global {
   interface Window {
@@ -57,14 +59,19 @@ export default function ExperienceClient({
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const [blocked] = useState(!initialAllowed);
+  const [connecting, setConnecting] = useState(false);
   const [active, setActive] = useState(false);
   const [ended, setEnded] = useState(false);
   const [remaining, setRemaining] = useState(MAX_SECONDS);
 
+  const biz = businessName || "your business";
+  const initial = (businessName || "S").trim().charAt(0).toUpperCase();
+  const isIndia = (country || "").toUpperCase() === "IN";
+
   const hideWidgetButton = () => {
-    document.querySelectorAll('[class*="vapi"], [id*="vapi"]').forEach((el) => {
-      const tag = (el as HTMLElement).tagName;
-      if (tag === "BUTTON" || tag === "DIV") (el as HTMLElement).style.display = "none";
+    document.querySelectorAll('[class*="vapi-btn"], [id^="vapi-"], [class*="vapi-support"]').forEach((el) => {
+      (el as HTMLElement).style.opacity = "0";
+      (el as HTMLElement).style.pointerEvents = "none";
     });
   };
 
@@ -79,24 +86,17 @@ export default function ExperienceClient({
           variableValues: { business: businessName, industry, profile, country },
         },
         config: {
+          // Created off-screen; our own Call button triggers it.
           position: "bottom",
-          offset: "40px",
+          offset: "-1000px",
           button: {
-            style: {
-              width: "76px",
-              height: "76px",
-              backgroundColor: "#00d4ff",
-              boxShadow: "0 0 30px rgba(0,212,255,0.6)",
-              border: "4px solid rgba(255,255,255,0.15)",
-              borderRadius: "50%",
-            },
+            style: { width: "1px", height: "1px", minWidth: "1px", minHeight: "1px", opacity: 0, position: "fixed", bottom: "-1000px" },
           },
         },
       });
 
       instance.on?.("call-start", async () => {
         startRef.current = Date.now();
-        // Claim the single allowed session; if already used elsewhere, stop.
         try {
           const r = await fetch(`/api/experience/${token}`, {
             method: "POST",
@@ -109,20 +109,20 @@ export default function ExperienceClient({
             return;
           }
         } catch {}
+        setConnecting(false);
         setActive(true);
         timerRef.current = setInterval(() => {
           const el = Math.floor((Date.now() - startRef.current) / 1000);
           setRemaining(Math.max(0, MAX_SECONDS - el));
           if (el >= MAX_SECONDS) {
-            try {
-              instance.stop?.();
-            } catch {}
+            try { instance.stop?.(); } catch {}
           }
         }, 1000);
       });
 
       instance.on?.("call-end", async () => {
         setActive(false);
+        setConnecting(false);
         setEnded(true);
         if (timerRef.current) clearInterval(timerRef.current);
         hideWidgetButton();
@@ -136,6 +136,8 @@ export default function ExperienceClient({
         } catch {}
       });
 
+      instance.on?.("error", () => setConnecting(false));
+
       vapiRef.current = instance;
     } catch (e) {
       console.error("Vapi init error:", e);
@@ -145,9 +147,7 @@ export default function ExperienceClient({
   useEffect(() => {
     if (!blocked && typeof window !== "undefined" && window.vapiSDK) init();
     return () => {
-      try {
-        vapiRef.current?.stop?.();
-      } catch {}
+      try { vapiRef.current?.stop?.(); } catch {}
       if (timerRef.current) clearInterval(timerRef.current);
       document
         .querySelectorAll('[class*="vapi-btn"], [id^="vapi-"], [class*="vapi-support"]')
@@ -156,82 +156,103 @@ export default function ExperienceClient({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const biz = businessName || "your business";
+  // Drive the hidden VAPI widget button.
+  const startCall = () => {
+    if (connecting || active) return;
+    setConnecting(true);
+    let tries = 0;
+    const tryClick = () => {
+      const btn = document.querySelector('[class*="vapi-btn"], [id^="vapi-"], [class*="vapi-support"]') as HTMLElement | null;
+      if (btn) { btn.click(); return; }
+      if (tries++ < 10) setTimeout(tryClick, 300);
+      else setConnecting(false);
+    };
+    tryClick();
+    // Safety: if the call never connects (e.g. mic blocked), reset the button.
+    setTimeout(() => setConnecting((c) => (active ? false : c && false)), 12000);
+  };
+
+  const endCall = () => {
+    try { vapiRef.current?.stop?.(); } catch {}
+  };
 
   // ── Already used ────────────────────────────────────────────────
   if (blocked) {
     return (
-      <div className="talk-wrap">
-        <div className="talk-card">
-          <div className="talk-eyebrow">Sample complete</div>
-          <h1 className="talk-title">You&apos;ve used your free sample 🎙️</h1>
-          <p className="talk-sub">
-            Hope you enjoyed hearing an AI assistant for {biz}! Ready to see the full version built for
-            your business? Book a quick live demo with our team.
-          </p>
-          <Link href="/contact" className="btn btn-primary talk-btn">
-            Book Your Live Demo →
-          </Link>
+      <div className="call-screen">
+        <div className="call-card">
+          <div className="call-avatar"><span>{initial}</span></div>
+          <div className="call-name">{biz}</div>
+          <div className="call-eyebrow">Sample complete</div>
+          <p className="call-msg">You&apos;ve already used your free sample. Ready for the full version, built and connected for your business?</p>
+          <Link href="/contact" className="btn btn-primary call-cta">Book your live demo →</Link>
         </div>
       </div>
     );
   }
 
+  // ── Ended ────────────────────────────────────────────────────────
+  if (ended) {
+    return (
+      <div className="call-screen">
+        <div className="call-card">
+          <div className="call-avatar done"><CheckCircle2 className="h-12 w-12" /></div>
+          <div className="call-name">{biz}</div>
+          <div className="call-eyebrow">That was your sample 🚀</div>
+          <p className="call-msg">Impressed? We&apos;ll build one tailored to {biz} — connected to your calendar and CRM.</p>
+          <Link href="/contact" className="btn btn-primary call-cta">Book your live demo →</Link>
+        </div>
+      </div>
+    );
+  }
+
+  // ── Idle / connecting / active call screen ──────────────────────
   return (
-    <div className="talk-wrap">
-      {!blocked && (
-        <Script
-          src="https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js"
-          onLoad={init}
-        />
-      )}
-      <div className="talk-card">
-        {ended ? (
-          <>
-            <div className="talk-orb">
-              <CheckCircle2 className="h-12 w-12" />
-            </div>
-            <div className="talk-eyebrow">That&apos;s your sample</div>
-            <h1 className="talk-title">Impressed? 🚀</h1>
-            <p className="talk-sub">
-              That was a live AI assistant for {biz}. Book a demo and we&apos;ll build one tailored to
-              your business — connected to your calendar and CRM.
-            </p>
-            <Link href="/contact" className="btn btn-primary talk-btn">
-              Book Your Live Demo →
-            </Link>
-          </>
+    <div className="call-screen">
+      <Script src="https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js" onLoad={init} />
+      <Link href="/" className="call-back"><ArrowLeft className="h-4 w-4" /> Home</Link>
+
+      <div className="call-card">
+        <div className={`call-avatar ${active ? "live" : ""} ${connecting ? "ringing" : ""}`}>
+          {(active || connecting) && <><span className="call-ring" /><span className="call-ring r2" /></>}
+          <span>{initial}</span>
+        </div>
+
+        <div className="call-name">{biz}</div>
+        <div className="call-role">AI Receptionist{isIndia ? " · తెలుగు · हिंदी · English" : ""}</div>
+
+        <div className={`call-status ${active ? "on" : ""}`}>
+          <span className="call-dot" />
+          {active ? "Connected — talk now" : connecting ? "Connecting…" : "Ready to call"}
+        </div>
+
+        {active ? (
+          <div className="call-wave">
+            {[0, 0.12, 0.24, 0.36, 0.48, 0.24, 0.12].map((d, i) => (
+              <span key={i} style={{ animationDelay: `${d}s` }} />
+            ))}
+          </div>
         ) : (
-          <>
-            <div className="talk-eyebrow">Live sample · {industry || "your business"}</div>
-            <h1 className="talk-title">Meet the AI assistant for {biz}</h1>
-            <p className="talk-sub">
-              {active
-                ? "Go ahead and talk — ask it anything a customer might."
-                : "Tap the glowing mic button (bottom of screen) to start your free 2-minute sample."}
-            </p>
-
-            <div className={`talk-orb ${active ? "live" : ""}`}>
-              {active ? (
-                <div className="wave-container" style={{ position: "absolute" }}>
-                  {[0, 0.1, 0.2, 0.3, 0.4].map((d) => (
-                    <div key={d} className="wave-bar" style={{ animationDelay: `${d}s` }} />
-                  ))}
-                </div>
-              ) : (
-                <Mic className="h-12 w-12" />
-              )}
-            </div>
-
-            {active && (
-              <div className="talk-status" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
-                <Clock className="h-4 w-4 text-primary" /> {fmt(remaining)} left
-              </div>
-            )}
-
-            <p className="talk-foot">One free 2-minute session · uses your microphone · nothing installed.</p>
-          </>
+          <div className="call-wave placeholder">
+            {[0, 1, 2, 3, 4, 5, 6].map((i) => <span key={i} />)}
+          </div>
         )}
+
+        <div className={`call-timer ${active ? "on" : ""}`}>{fmt(active ? remaining : MAX_SECONDS)}</div>
+
+        {active ? (
+          <button className="call-btn end" onClick={endCall} aria-label="End call">
+            <PhoneOff className="h-7 w-7" />
+          </button>
+        ) : (
+          <button className={`call-btn start ${connecting ? "busy" : ""}`} onClick={startCall} disabled={connecting} aria-label="Start call">
+            <Phone className="h-7 w-7" />
+          </button>
+        )}
+
+        <p className="call-hint">
+          {active ? "Ask it anything a customer might." : connecting ? "Allow microphone access when prompted." : "Free 2-minute call · uses your microphone · nothing to install"}
+        </p>
       </div>
     </div>
   );
