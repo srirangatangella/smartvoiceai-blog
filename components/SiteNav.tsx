@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Mic, Menu, X, Play } from "lucide-react";
+import { Menu, X, Play } from "lucide-react";
 import { primaryNav, siteConfig } from "@/lib/site";
+import BrandMark from "@/components/BrandMark";
 
 export default function SiteNav() {
   const [open, setOpen] = useState(false);
@@ -12,7 +13,7 @@ export default function SiteNav() {
     <nav className="site-header">
       <Link href="/" className="nav-logo" aria-label="Smart Voice AI home">
         <span className="nav-logo-mark">
-          <Mic className="h-5 w-5" />
+          <BrandMark className="h-5 w-5" />
         </span>
         <span>
           SMART VOICE <span className="text-primary font-extrabold">AI</span>

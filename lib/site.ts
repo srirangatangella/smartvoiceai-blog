@@ -109,6 +109,51 @@ export const capabilities = [
   },
 ] as const;
 
+/** Productised services shown on the homepage. The web voice assistant is featured. */
+export const services = [
+  {
+    icon: "Mic",
+    title: "Web Voice Assistant",
+    tagline: "Click and talk — instantly. No phone number needed.",
+    points: [
+      "Visitors tap once and speak to your AI right in the browser",
+      "No dialing, no hold music, no phone number to share",
+      "Add a QR code so anyone can scan and start talking in seconds",
+      "Answers questions, qualifies, and books — mid-conversation",
+    ],
+    href: "/solutions/website-voice-assistant",
+    featured: true,
+  },
+  {
+    icon: "LayoutTemplate",
+    title: "Website Creation",
+    tagline: "A modern, conversion-ready website — designed and built for you.",
+    points: ["Fast, mobile-first and SEO-ready", "Your branding, photos and services", "Online booking built in"],
+    href: "/contact",
+  },
+  {
+    icon: "MessagesSquare",
+    title: "AI Chat Assistant",
+    tagline: "A smart chat widget that answers and captures leads 24/7.",
+    points: ["Knows your business inside out", "Books appointments in chat", "Every lead synced to your CRM"],
+    href: "/contact",
+  },
+  {
+    icon: "MessageCircle",
+    title: "WhatsApp Integration",
+    tagline: "Meet customers where they already are — on WhatsApp.",
+    points: ["Auto-reply to every enquiry", "Appointment reminders that cut no-shows", "Never miss a message again"],
+    href: "/contact",
+  },
+  {
+    icon: "PhoneCall",
+    title: "AI Phone Receptionist",
+    tagline: "Answers every call 24/7, qualifies, and books appointments.",
+    points: ["Picks up in one ring, day or night", "Routes hot leads to your team", "Syncs to your calendar & CRM"],
+    href: "/solutions/inbound-voice-agents",
+  },
+] as const;
+
 /** Integration partners shown in the trust bar (tools the client already uses — not our build stack). */
 export const builtWith = ["HubSpot", "Salesforce", "GoHighLevel", "Zoho", "Google Calendar", "Outlook"];
 

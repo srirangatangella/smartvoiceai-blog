@@ -13,6 +13,7 @@ import {
 import { buildMetadata, serviceSchema, JsonLd } from "@/lib/seo";
 import { siteConfig, homeFaqs } from "@/lib/site";
 import CapabilitiesGrid from "@/components/CapabilitiesGrid";
+import ServicesGrid from "@/components/ServicesGrid";
 import TrustBar from "@/components/TrustBar";
 import Testimonials from "@/components/Testimonials";
 import Faq from "@/components/Faq";
@@ -109,6 +110,8 @@ export default function HomePage() {
       </section>
 
       <TrustBar />
+
+      <ServicesGrid />
 
       <CapabilitiesGrid />
 

@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { Mic, Mail } from "lucide-react";
+import { Mail } from "lucide-react";
 import { footerNav, siteConfig } from "@/lib/site";
+import BrandMark from "@/components/BrandMark";
 
 function WhatsAppIcon({ className }: { className?: string }) {
   return (
@@ -17,7 +18,7 @@ export default function SiteFooter() {
         <div className="footer-brand">
           <Link href="/" className="footer-logo-row">
             <span className="nav-logo-mark">
-              <Mic className="h-5 w-5" />
+              <BrandMark className="h-5 w-5" />
             </span>
             <span>
               SMART VOICE <span className="text-primary">AI</span>
