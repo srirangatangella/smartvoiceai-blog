@@ -71,6 +71,7 @@ async function ensureSchema(client: ReturnType<typeof postgres>) {
       await client`ALTER TABLE experiences ADD COLUMN IF NOT EXISTS address TEXT`;
       await client`ALTER TABLE experiences ADD COLUMN IF NOT EXISTS city TEXT`;
       await client`ALTER TABLE experiences ADD COLUMN IF NOT EXISTS phone TEXT`;
+      await client`ALTER TABLE experiences ADD COLUMN IF NOT EXISTS country TEXT`;
       // Demo bookings captured by the AI booker (or the site).
       await client`
         CREATE TABLE IF NOT EXISTS bookings (
@@ -135,6 +136,7 @@ export interface ExperienceInput {
   address?: string;
   rating?: number | null;
   reviews?: number | null;
+  country?: string;
 }
 
 export interface ExperienceRow {
@@ -144,6 +146,7 @@ export interface ExperienceRow {
   website: string | null;
   profile: string | null;
   used: boolean;
+  country: string | null;
 }
 
 /** Create a session token for a lead/prospect. Returns null if DB not configured. */
@@ -153,10 +156,11 @@ export async function createExperience(data: ExperienceInput): Promise<string | 
   await ensureSchema(client);
   const token = randomBytes(16).toString("hex");
   await client`
-    INSERT INTO experiences (token, business_name, industry, website, profile, city, phone, address, rating, reviews)
+    INSERT INTO experiences (token, business_name, industry, website, profile, city, phone, address, rating, reviews, country)
     VALUES (${token}, ${data.businessName ?? null}, ${data.industry ?? null},
             ${data.website ?? null}, ${data.profile ?? null}, ${data.city ?? null},
-            ${data.phone ?? null}, ${data.address ?? null}, ${data.rating ?? null}, ${data.reviews ?? null})
+            ${data.phone ?? null}, ${data.address ?? null}, ${data.rating ?? null}, ${data.reviews ?? null},
+            ${data.country ?? null})
   `;
   return token;
 }
@@ -166,7 +170,7 @@ export async function getExperience(token: string): Promise<ExperienceRow | null
   if (!client) return null;
   await ensureSchema(client);
   const rows = await client`
-    SELECT token, business_name, industry, website, profile, used
+    SELECT token, business_name, industry, website, profile, used, country
     FROM experiences WHERE token = ${token}
   `;
   return (rows[0] as ExperienceRow) ?? null;

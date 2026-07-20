@@ -17,7 +17,7 @@ const TYPES = [
   "Other",
 ];
 
-const empty = { name: "", businessName: "", businessType: "", email: "", phone: "", city: "", website: "", googleLink: "", description: "" };
+const empty = { name: "", businessName: "", businessType: "", country: "", email: "", phone: "", city: "", website: "", googleLink: "", description: "" };
 
 export default function DemoPage() {
   const [kind, setKind] = useState<Kind | null>(null);
@@ -123,12 +123,20 @@ export default function DemoPage() {
                   {TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
                 </select>
               </label>
-              <label>City<input value={f.city} onChange={set("city")} placeholder="e.g. Hyderabad" /></label>
+              <label>Country{kind === "voice" && <span className="demo2-opt"> (sets the assistant&apos;s language)</span>}
+                <select value={f.country} onChange={set("country")}>
+                  <option value="">Auto-detect</option>
+                  <option value="IN">India (Telugu / Hindi / English)</option>
+                  <option value="US">United States (English)</option>
+                  <option value="OTHER">Other</option>
+                </select>
+              </label>
             </div>
             <div className="demo2-row">
               <label>Email *<input type="email" value={f.email} onChange={set("email")} placeholder="you@business.com" required /></label>
               <label>Phone<input value={f.phone} onChange={set("phone")} placeholder="+91 …" /></label>
             </div>
+            <label>City<input value={f.city} onChange={set("city")} placeholder="e.g. Hyderabad" /></label>
             <label>Website <span className="demo2-opt">(optional — we&apos;ll pull your info from it)</span>
               <input value={f.website} onChange={set("website")} placeholder="yourbusiness.com" />
             </label>

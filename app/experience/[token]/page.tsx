@@ -43,6 +43,7 @@ export default async function ExperiencePage({ params }: { params: Promise<{ tok
       businessName={exp.business_name || ""}
       industry={exp.industry || ""}
       profile={profile}
+      country={exp.country || ""}
     />
   );
 }

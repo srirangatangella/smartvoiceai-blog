@@ -19,7 +19,15 @@ declare global {
 }
 
 const PUBLIC_KEY = process.env.NEXT_PUBLIC_VAPI_PUBLIC_KEY || "ba407006-669b-4cb3-91c2-1796c297d18e";
-const ASSISTANT_ID = process.env.NEXT_PUBLIC_SAMPLE_ASSISTANT_ID || "320adb5f-8ac2-4a36-a48f-4a248aff9090";
+// Default/US assistant (English). India gets a separate multilingual assistant
+// (Telugu / Hindi / English) once its ID is set in NEXT_PUBLIC_SAMPLE_ASSISTANT_ID_IN.
+const ASSISTANT_US = process.env.NEXT_PUBLIC_SAMPLE_ASSISTANT_ID || "320adb5f-8ac2-4a36-a48f-4a248aff9090";
+const ASSISTANT_IN = process.env.NEXT_PUBLIC_SAMPLE_ASSISTANT_ID_IN || "";
+
+/** India → multilingual assistant when configured; otherwise fall back to the default. */
+function pickAssistant(country?: string) {
+  return (country || "").toUpperCase() === "IN" && ASSISTANT_IN ? ASSISTANT_IN : ASSISTANT_US;
+}
 const MAX_SECONDS = 120;
 
 function fmt(s: number) {
@@ -34,12 +42,14 @@ export default function ExperienceClient({
   businessName,
   industry,
   profile = "",
+  country = "",
 }: {
   token: string;
   initialAllowed: boolean;
   businessName: string;
   industry: string;
   profile?: string;
+  country?: string;
 }) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const vapiRef = useRef<any>(null);
@@ -63,10 +73,10 @@ export default function ExperienceClient({
     try {
       const instance = window.vapiSDK.run({
         apiKey: PUBLIC_KEY,
-        assistant: ASSISTANT_ID,
+        assistant: pickAssistant(country),
         assistantOverrides: {
           maxDurationSeconds: MAX_SECONDS,
-          variableValues: { business: businessName, industry, profile },
+          variableValues: { business: businessName, industry, profile, country },
         },
         config: {
           position: "bottom",

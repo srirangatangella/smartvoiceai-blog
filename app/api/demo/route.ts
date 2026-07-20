@@ -29,6 +29,12 @@ export async function POST(req: Request) {
   const googleLink = (b.googleLink || "").trim();
   const description = (b.description || "").trim();
   const city = (b.city || "").trim();
+  // Country routes the voice assistant (India → multilingual). Use the explicit
+  // choice; otherwise infer from the phone's country code.
+  const digits = phone.replace(/[^\d+]/g, "");
+  const inferred = digits.startsWith("+91") || /^91\d{10}$/.test(digits) ? "IN"
+    : digits.startsWith("+1") || /^1\d{10}$/.test(digits) ? "US" : "";
+  const country = ((b.country || inferred || "").toUpperCase().slice(0, 2)) || "";
 
   if (!name || !businessName || !businessType || !email) {
     return NextResponse.json({ error: "Please fill in your name, business name, type and email." }, { status: 400 });
@@ -70,6 +76,7 @@ export async function POST(req: Request) {
     profile: profile || undefined,
     city: city || undefined,
     phone: phone || undefined,
+    country: country || undefined,
   });
 
   if (!token) {
