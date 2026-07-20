@@ -23,21 +23,24 @@ export default function OgImage() {
         <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
           <div
             style={{
-              width: 60,
-              height: 60,
+              width: 64,
+              height: 64,
               borderRadius: 16,
-              background: "linear-gradient(135deg, #00d4ff, #6ee7ff)",
+              background: "linear-gradient(135deg, #22d3ee, #3b82f6 55%, #6366f1)",
               display: "flex",
-              alignItems: "center",
+              alignItems: "flex-end",
               justifyContent: "center",
-              fontSize: 34,
+              gap: 5,
+              padding: "0 13px 22px",
             }}
           >
-            🎙️
+            {[15, 27, 38, 27, 15].map((h, i) => (
+              <div key={i} style={{ width: 5.5, height: h, borderRadius: 3, background: "#fff" }} />
+            ))}
           </div>
           <div style={{ display: "flex", gap: 10, color: "#fff", fontSize: 30, fontWeight: 800, letterSpacing: -0.5 }}>
             <span>SMART VOICE</span>
-            <span style={{ color: "#00d4ff" }}>AI</span>
+            <span style={{ color: "#22d3ee" }}>AI</span>
           </div>
         </div>
 
