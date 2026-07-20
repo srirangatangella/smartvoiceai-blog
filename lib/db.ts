@@ -130,6 +130,11 @@ export interface ExperienceInput {
   industry?: string;
   website?: string;
   profile?: string;
+  city?: string;
+  phone?: string;
+  address?: string;
+  rating?: number | null;
+  reviews?: number | null;
 }
 
 export interface ExperienceRow {
@@ -148,9 +153,10 @@ export async function createExperience(data: ExperienceInput): Promise<string | 
   await ensureSchema(client);
   const token = randomBytes(16).toString("hex");
   await client`
-    INSERT INTO experiences (token, business_name, industry, website, profile)
+    INSERT INTO experiences (token, business_name, industry, website, profile, city, phone, address, rating, reviews)
     VALUES (${token}, ${data.businessName ?? null}, ${data.industry ?? null},
-            ${data.website ?? null}, ${data.profile ?? null})
+            ${data.website ?? null}, ${data.profile ?? null}, ${data.city ?? null},
+            ${data.phone ?? null}, ${data.address ?? null}, ${data.rating ?? null}, ${data.reviews ?? null})
   `;
   return token;
 }

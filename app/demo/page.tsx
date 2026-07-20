@@ -1,308 +1,155 @@
 "use client";
 
-import React, { useState, useEffect, useRef, Suspense } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
-import Script from "next/script";
+import { useState } from "react";
 import Link from "next/link";
-import { Mic, ArrowLeft } from "lucide-react";
-import { clients, ClientConfig } from "@/lib/clients";
+import { Mic, Globe, ArrowLeft, ArrowRight, Loader2, Sparkles, Check } from "lucide-react";
+import BrandMark from "@/components/BrandMark";
 
-declare global {
-  interface Window {
-    vapiSDK?: any;
-  }
-}
+type Kind = "website" | "voice";
 
-const PUBLIC_KEY = "ba407006-669b-4cb3-91c2-1796c297d18e";
+const TYPES = [
+  "Dental clinic",
+  "Medical clinic / Hospital",
+  "Real estate",
+  "Hotel / hospitality",
+  "Gym / fitness",
+  "Restaurant / cafe",
+  "Other",
+];
 
-function DemoContent() {
-  const searchParams = useSearchParams();
-  const router = useRouter();
-  const vapiRef = useRef<any>(null);
+const empty = { name: "", businessName: "", businessType: "", email: "", phone: "", city: "", website: "", googleLink: "", description: "" };
 
-  // Parse current client from search params, default to first client ('apas')
-  const clientParam = searchParams.get("client");
-  const initialClientKey = clientParam && clients[clientParam] ? clientParam : "apas";
+export default function DemoPage() {
+  const [kind, setKind] = useState<Kind | null>(null);
+  const [f, setF] = useState(empty);
+  const [loading, setLoading] = useState(false);
+  const [err, setErr] = useState("");
 
-  const [currentClientKey, setCurrentClientKey] = useState<string>(initialClientKey);
-  const [statusText, setStatusText] = useState<string>("Ready to call");
-  const [isCalling, setIsCalling] = useState<boolean>(false);
-  const [overlayVisible, setOverlayVisible] = useState<boolean>(false);
-  const [overlayImage, setOverlayImage] = useState<string>("");
-  const [scriptLoaded, setScriptLoaded] = useState<boolean>(false);
+  const set = (k: keyof typeof empty) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
+    setF((s) => ({ ...s, [k]: e.target.value }));
 
-  const currentClient = clients[currentClientKey];
-
-  // Helper to trigger showing client visuals based on voice commands
-  const showVisual = (requestedType: string, clientKey: string) => {
-    const client = clients[clientKey];
-    if (!client || !client.images) return;
-
-    const cleanType = (requestedType || "masterplan").toString().toLowerCase();
-    let finalKey = "default";
-
-    if (cleanType.includes("master")) finalKey = "default";
-    else if (cleanType.includes("tower")) finalKey = "tower";
-    else if (cleanType.includes("1695") || cleanType.includes("east")) finalKey = "1695";
-    else if (cleanType.includes("1870") || cleanType.includes("west")) finalKey = "1870";
-    else if (cleanType.includes("living") || cleanType.includes("interior")) finalKey = "living";
-    else if (client.images[cleanType]) finalKey = cleanType;
-
-    const imageUrl = client.images[finalKey] || client.images["default"];
-    if (imageUrl) {
-      setOverlayImage(imageUrl);
-      setOverlayVisible(true);
+  async function submit(e: React.FormEvent) {
+    e.preventDefault();
+    setErr("");
+    if (!f.name || !f.businessName || !f.businessType || !f.email) {
+      setErr("Please fill in your name, business name, type and email.");
+      return;
     }
-  };
-
-  const closeOverlay = () => {
-    setOverlayVisible(false);
-  };
-
-  // Initialize/Teardown Vapi for a client configuration
-  const setupVapi = (clientKey: string) => {
-    if (!window.vapiSDK) return;
-
-    // Stop existing instance
-    if (vapiRef.current) {
-      vapiRef.current.stop();
-      vapiRef.current = null;
-    }
-
-    const client = clients[clientKey];
-    setStatusText("Ready to call");
-    setIsCalling(false);
-
+    setLoading(true);
     try {
-      const vapiInstance = window.vapiSDK.run({
-        apiKey: PUBLIC_KEY,
-        assistant: client.assistantId,
-        config: {
-          voice: { provider: "11labs", voiceId: client.voiceId },
-          position: "bottom",
-          button: {
-            style: {
-              width: "70px",
-              height: "70px",
-              bottom: "50px",
-              backgroundColor: "#4ade80",
-              boxShadow: "0 0 20px rgba(74, 222, 128, 0.4)",
-              border: "4px solid rgba(255,255,255,0.2)",
-              borderRadius: "50%",
-            },
-          },
-        },
+      const r = await fetch("/api/demo", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ kind, ...f }),
       });
-
-      vapiInstance.on("call-start", () => {
-        setStatusText("Listening...");
-        setIsCalling(true);
-      });
-
-      vapiInstance.on("call-end", () => {
-        setStatusText("Ready to call");
-        setIsCalling(false);
-        setOverlayVisible(false);
-      });
-
-      vapiInstance.on("message", (message: any) => {
-        if (message.type === "tool-calls") {
-          const toolCall = message.toolCalls[0];
-          if (toolCall.function.name.toLowerCase() === "showfloorplan") {
-            let args: any = {};
-            try {
-              if (typeof toolCall.function.arguments === "object") {
-                args = toolCall.function.arguments;
-              } else {
-                args = JSON.parse(toolCall.function.arguments);
-              }
-            } catch (e) {
-              console.error("Error parsing floorplan args", e);
-            }
-            showVisual(args.type, clientKey);
-            vapiInstance.send({
-              type: "tool-calls-result",
-              toolCalls: [{ id: toolCall.id, result: "Image displayed." }],
-            });
-          }
-        }
-      });
-
-      vapiRef.current = vapiInstance;
-    } catch (err) {
-      console.error("Error running Vapi SDK", err);
-    }
-  };
-
-  // Run setup when script is loaded or client changes
-  useEffect(() => {
-    if (scriptLoaded && window.vapiSDK) {
-      setupVapi(currentClientKey);
-    }
-    return () => {
-      if (vapiRef.current) {
-        vapiRef.current.stop();
-        vapiRef.current = null;
+      const d = await r.json();
+      if (!r.ok || !d.url) {
+        setErr(d.error || "Something went wrong. Please try again.");
+        setLoading(false);
+        return;
       }
-    };
-  }, [currentClientKey, scriptLoaded]);
-
-  // Handle client selection change
-  const handleClientChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const nextClientKey = e.target.value;
-    setCurrentClientKey(nextClientKey);
-    router.replace(`?client=${nextClientKey}`);
-  };
+      window.location.href = d.url;
+    } catch {
+      setErr("Network error. Please try again.");
+      setLoading(false);
+    }
+  }
 
   return (
-    <>
-      <Script
-        src="https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js"
-        onLoad={() => setScriptLoaded(true)}
-      />
+    <div className="demo2">
+      <div className="demo2-top">
+        <Link href="/" className="demo2-back">
+          <ArrowLeft className="h-4 w-4" /> Home
+        </Link>
+        <span className="demo2-brand">
+          <span className="nav-logo-mark"><BrandMark className="h-5 w-5" /></span>
+          Smart Voice <span className="text-primary font-extrabold">AI</span>
+        </span>
+      </div>
 
-      <style jsx global>{`
-        body {
-          margin: 0;
-          background: #000;
-          color: #fff;
-          height: 100vh;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          overflow: hidden;
-        }
-      `}</style>
-
-      {/* Background layer */}
-      <div
-        className="absolute inset-0 bg-cover bg-center opacity-40 transition-all duration-500 z-0"
-        style={{ backgroundImage: `url('${currentClient.bgImage}')` }}
-      ></div>
-
-      {/* Floor Plan Overlay */}
-      {overlayVisible && (
-        <div
-          className="fixed inset-0 bg-[rgba(0,0,0,0.95)] flex flex-col items-center justify-center z-[9999] transition-opacity duration-300 backdrop-blur-md opacity-100"
-          onClick={closeOverlay}
-        >
-          <img
-            src={overlayImage}
-            alt="Floor Plan Preview"
-            className="max-w-[95vw] max-h-[80vh] object-contain rounded-lg shadow-[0_0_50px_rgba(0,0,0,0.8)] scale-100 transition-transform duration-300"
-            onClick={(e) => e.stopPropagation()}
-          />
-          <button
-            className="mt-5 py-3 px-[30px] bg-[rgba(255,255,255,0.15)] text-white border border-[rgba(255,255,255,0.3)] rounded-[50px] cursor-pointer text-sm uppercase tracking-wider hover:bg-[rgba(255,255,255,0.25)]"
-            onClick={closeOverlay}
-          >
-            Close Preview
-          </button>
+      {loading && (
+        <div className="demo2-loading">
+          <Loader2 className="h-10 w-10 animate-spin text-primary" />
+          <p>{kind === "voice" ? "Warming up your AI receptionist…" : "Building your website…"}</p>
+          <span>This takes just a few seconds.</span>
         </div>
       )}
 
-      {/* Back button */}
-      <Link
-        href="/"
-        className="absolute top-6 left-6 z-50 flex items-center gap-2 text-white/80 hover:text-white transition-colors duration-300 text-sm font-semibold bg-black/40 border border-white/10 rounded-full px-4 py-2 hover:bg-black/60"
-      >
-        <ArrowLeft className="h-4 w-4" /> Back to Home
-      </Link>
-
-      {/* Main UI Interface Container */}
-      <div className="text-center max-w-[600px] p-5 z-10 relative flex flex-col items-center pb-[120px] pointer-events-none select-none">
-        <div
-          className="text-sm tracking-[3px] uppercase mb-5 font-semibold pointer-events-auto"
-          id="client-logo"
-          style={{ color: currentClient.primaryColor }}
-          dangerouslySetInnerHTML={{ __html: currentClient.logo }}
-        />
-
-        <select
-          id="demoSelect"
-          className="py-2.5 px-4 rounded-lg bg-black/80 text-white border border-white/30 mb-6 cursor-pointer text-sm outline-none pointer-events-auto select-auto"
-          value={currentClientKey}
-          onChange={handleClientChange}
-        >
-          {Object.values(clients).map((c) => (
-            <option key={c.key} value={c.key}>
-              {c.name}
-            </option>
-          ))}
-        </select>
-
-        <h1
-          id="client-tagline"
-          className="font-serif text-[32px] md:text-[40px] mb-2.5 leading-[1.1] pointer-events-auto"
-        >
-          {currentClient.tagline}
-        </h1>
-        <div className="text-base text-[#aaa] mb-6 pointer-events-auto font-medium">
-          AI Virtual Sales Director
-        </div>
-
-        <div
-          className="w-[110px] h-[110px] md:w-[130px] md:h-[130px] mb-5 rounded-full p-1 border-2 border-dashed border-white/25 relative z-10 bg-black/30 pointer-events-auto"
-          style={{ borderColor: currentClient.primaryColor }}
-        >
-          <img
-            id="avatar"
-            className="w-full h-full rounded-full object-cover border-3 border-solid"
-            style={{ borderColor: currentClient.primaryColor }}
-            src={
-              currentClientKey === "apas"
-                ? "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&auto=format&fit=crop"
-                : "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop"
-            }
-            alt="AI Assistant Avatar"
-          />
-        </div>
-
-        <div className="text-sm opacity-90 font-medium min-h-5 mt-2.5 flex items-center gap-2 pointer-events-auto">
-          <span
-            id="status-dot"
-            style={{ color: isCalling ? "#00d4ff" : "#4ade80" }}
-            className={`text-lg leading-none ${isCalling ? "animate-pulse" : ""}`}
-          >
-            ●
+      {!kind ? (
+        <div className="demo2-inner">
+          <span className="eyebrow" style={{ marginBottom: 16 }}>
+            <Sparkles className="inline h-3.5 w-3.5" /> Free live demo
           </span>
-          <span id="status-text">{statusText}</span>
-        </div>
-
-        {/* Sneaky pulsing wave indicator shown when speaking or listening */}
-        {isCalling && (
-          <div className="absolute top-[280px] flex items-center gap-1.5 h-[100px] z-0">
-            <div
-              className="w-2 bg-primary rounded-full animate-[wave_1s_infinite_ease-in-out]"
-              style={{ animationDelay: "0s", height: "30px", boxShadow: "0 0 15px #00d4ff" }}
-            ></div>
-            <div
-              className="w-2 bg-primary rounded-full animate-[wave_1s_infinite_ease-in-out]"
-              style={{ animationDelay: "0.1s", height: "50px", boxShadow: "0 0 15px #00d4ff" }}
-            ></div>
-            <div
-              className="w-2 bg-primary rounded-full animate-[wave_1s_infinite_ease-in-out]"
-              style={{ animationDelay: "0.2s", height: "80px", boxShadow: "0 0 15px #00d4ff" }}
-            ></div>
-            <div
-              className="w-2 bg-primary rounded-full animate-[wave_1s_infinite_ease-in-out]"
-              style={{ animationDelay: "0.3s", height: "50px", boxShadow: "0 0 15px #00d4ff" }}
-            ></div>
-            <div
-              className="w-2 bg-primary rounded-full animate-[wave_1s_infinite_ease-in-out]"
-              style={{ animationDelay: "0.4s", height: "30px", boxShadow: "0 0 15px #00d4ff" }}
-            ></div>
+          <h1 className="demo2-h1">What would you like to see?</h1>
+          <p className="demo2-sub">Pick one and we&apos;ll generate it for your business in seconds — no signup.</p>
+          <div className="demo2-choose">
+            <button className="demo2-choice" onClick={() => setKind("website")}>
+              <span className="demo2-choice-ic"><Globe className="h-7 w-7" /></span>
+              <h3>Build my website</h3>
+              <p>A modern, ready-to-launch website generated from your business details.</p>
+              <span className="demo2-choice-go">Start <ArrowRight className="h-4 w-4" /></span>
+            </button>
+            <button className="demo2-choice featured" onClick={() => setKind("voice")}>
+              <span className="demo2-badge">Signature</span>
+              <span className="demo2-choice-ic"><Mic className="h-7 w-7" /></span>
+              <h3>Try a voice AI receptionist</h3>
+              <p>Talk to a live AI assistant built for your business — right in your browser.</p>
+              <span className="demo2-choice-go">Start <ArrowRight className="h-4 w-4" /></span>
+            </button>
           </div>
-        )}
-      </div>
-    </>
-  );
-}
+        </div>
+      ) : (
+        <div className="demo2-inner">
+          <button className="demo2-back demo2-back-inline" onClick={() => { setKind(null); setErr(""); }}>
+            <ArrowLeft className="h-4 w-4" /> Choose a different demo
+          </button>
+          <span className="eyebrow" style={{ marginBottom: 14 }}>
+            {kind === "voice" ? <><Mic className="inline h-3.5 w-3.5" /> Voice AI demo</> : <><Globe className="inline h-3.5 w-3.5" /> Website demo</>}
+          </span>
+          <h1 className="demo2-h1">
+            {kind === "voice" ? "Let's build your AI receptionist" : "Let's build your website"}
+          </h1>
+          <p className="demo2-sub">A few quick details and we&apos;ll generate it instantly.</p>
 
-export default function DemoPage() {
-  return (
-    <Suspense fallback={<div className="text-white text-center p-10">Loading Demo Experience...</div>}>
-      <DemoContent />
-    </Suspense>
+          <form className="demo2-form" onSubmit={submit}>
+            <div className="demo2-row">
+              <label>Your name *<input value={f.name} onChange={set("name")} placeholder="e.g. Dr. Anita Rao" required /></label>
+              <label>Business name *<input value={f.businessName} onChange={set("businessName")} placeholder="e.g. Bright Smile Dental" required /></label>
+            </div>
+            <div className="demo2-row">
+              <label>Business type *
+                <select value={f.businessType} onChange={set("businessType")} required>
+                  <option value="">Select…</option>
+                  {TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
+                </select>
+              </label>
+              <label>City<input value={f.city} onChange={set("city")} placeholder="e.g. Hyderabad" /></label>
+            </div>
+            <div className="demo2-row">
+              <label>Email *<input type="email" value={f.email} onChange={set("email")} placeholder="you@business.com" required /></label>
+              <label>Phone<input value={f.phone} onChange={set("phone")} placeholder="+91 …" /></label>
+            </div>
+            <label>Website <span className="demo2-opt">(optional — we&apos;ll pull your info from it)</span>
+              <input value={f.website} onChange={set("website")} placeholder="yourbusiness.com" />
+            </label>
+            {kind === "website" && (
+              <label>Google Business page <span className="demo2-opt">(optional)</span>
+                <input value={f.googleLink} onChange={set("googleLink")} placeholder="Paste your Google Maps / Business link" />
+              </label>
+            )}
+            <label>Or describe your business <span className="demo2-opt">(optional — helps us tailor it)</span>
+              <textarea value={f.description} onChange={set("description")} rows={3} placeholder="What you do, your key services, what makes you great…" />
+            </label>
+
+            {err && <div className="demo2-err">{err}</div>}
+
+            <button type="submit" className="btn btn-primary demo2-submit" disabled={loading}>
+              {kind === "voice" ? <><Mic className="h-4 w-4" /> Generate my AI receptionist</> : <><Sparkles className="h-4 w-4" /> Generate my website</>}
+            </button>
+            <p className="demo2-fine"><Check className="inline h-3.5 w-3.5 text-primary" /> Free · No signup · Ready in seconds</p>
+          </form>
+        </div>
+      )}
+    </div>
   );
 }

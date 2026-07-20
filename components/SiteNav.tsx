@@ -31,7 +31,7 @@ export default function SiteNav() {
 
       {/* Desktop CTA */}
       <div className="nav-cta hidden md:flex">
-        <Link href="/demo?client=apas" className="btn btn-outline py-2 px-5">
+        <Link href="/demo" className="btn btn-outline py-2 px-5">
           <Play className="h-4 w-4 fill-white" /> Live Demo
         </Link>
         <Link href="/book" className="btn btn-primary py-2 px-5">
@@ -59,7 +59,7 @@ export default function SiteNav() {
           ))}
           <div className="flex flex-col gap-3 mt-4">
             <Link
-              href="/demo?client=apas"
+              href="/demo"
               onClick={() => setOpen(false)}
               className="btn btn-outline justify-center py-2.5"
             >

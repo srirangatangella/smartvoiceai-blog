@@ -22,7 +22,7 @@ export default function CtaBand({
         <Link href={primaryHref} className="btn btn-primary">
           {primaryLabel} <ArrowRight className="h-4 w-4" />
         </Link>
-        <Link href="/demo?client=apas" className="btn btn-outline">
+        <Link href="/demo" className="btn btn-outline">
           <Mic className="h-4 w-4" /> Try the Live Demo
         </Link>
       </div>

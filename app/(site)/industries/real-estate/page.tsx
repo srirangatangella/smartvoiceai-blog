@@ -153,7 +153,7 @@ export default function RealEstatePage() {
               <li><CheckCircle2 className="h-5 w-5" /> Books into your real calendar</li>
               <li><CheckCircle2 className="h-5 w-5" /> Live in 1–2 weeks</li>
             </ul>
-            <Link href="/demo?client=apas" className="btn btn-outline">Try the live real estate demo</Link>
+            <Link href="/demo" className="btn btn-outline">Try the live real estate demo</Link>
           </div>
           <LeadForm source="Real Estate page" />
         </div>

@@ -49,7 +49,7 @@ export default function ServicesGrid() {
               ))}
             </ul>
             <div className="svc-featured-cta">
-              <Link href="/demo?client=apas" className="btn btn-primary">
+              <Link href="/demo" className="btn btn-primary">
                 <Mic className="h-4 w-4" /> Try it — click &amp; talk
               </Link>
               <Link href={featured.href} className="btn btn-outline">

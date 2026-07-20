@@ -75,7 +75,7 @@ export default function WebsiteVoiceAssistantPage() {
             <li><CheckCircle2 className="h-5 w-5" /> Captures leads 24/7 from your existing traffic</li>
             <li><CheckCircle2 className="h-5 w-5" /> Drops into any website with one snippet</li>
           </ul>
-          <Link href="/demo?client=apas" className="btn btn-primary mt-6"><Mic className="h-4 w-4" /> Try the live demo</Link>
+          <Link href="/demo" className="btn btn-primary mt-6"><Mic className="h-4 w-4" /> Try the live demo</Link>
         </div>
         <div className="split-visual">
           <div className="demo-visual" style={{ minHeight: 240 }}>

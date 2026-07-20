@@ -35,7 +35,7 @@ export default function PageHero({
           </Link>
         )}
         {showDemo && (
-          <Link href="/demo?client=apas" className="btn btn-outline">
+          <Link href="/demo" className="btn btn-outline">
             <Mic className="h-4 w-4" /> Try Live Demo
           </Link>
         )}

@@ -81,7 +81,7 @@ export default function HomePage() {
           phone and on your website.
         </p>
         <div className="hero-btns">
-          <Link href="/demo?client=apas" className="btn btn-primary">
+          <Link href="/demo" className="btn btn-primary">
             Experience the Voice AI <ArrowRight className="h-4 w-4" />
           </Link>
           <Link href="/contact" className="btn btn-outline">
@@ -196,7 +196,7 @@ export default function HomePage() {
               Have a natural, real-time conversation. Sneha handles real estate questions, overcomes
               objections, and books site visits — right in your browser.
             </p>
-            <Link href="/demo?client=apas" className="btn btn-primary">
+            <Link href="/demo" className="btn btn-primary">
               <Mic className="h-5 w-5" /> Try the Live Demo
             </Link>
           </div>
