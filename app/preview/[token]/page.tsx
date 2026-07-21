@@ -8,9 +8,21 @@ import PreviewWidgets from "@/components/PreviewWidgets";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
-  robots: { index: false, follow: false }, // demo pages must never be indexed
-};
+export async function generateMetadata({ params }: { params: Promise<{ token: string }> }): Promise<Metadata> {
+  const { token } = await params;
+  const p = await getPreview(token).catch(() => null);
+  const name = p?.business_name || "Your Business";
+  return {
+    title: `${name} — website preview`,
+    description: `A personalized demo website for ${name} by Smart Voice AI — online booking, an AI chat assistant, WhatsApp, and a 24/7 AI receptionist.`,
+    robots: { index: false, follow: false }, // demo pages must never be indexed
+    openGraph: {
+      title: `${name} — demo website`,
+      description: `See how ${name} could book appointments online, chat with AI 24/7, and never miss a call — a free preview by Smart Voice AI.`,
+      type: "website",
+    },
+  };
+}
 
 const HOURS = "Mon–Sat, 9:00 AM – 8:00 PM";
 
