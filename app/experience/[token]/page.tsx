@@ -2,8 +2,13 @@ import Link from "next/link";
 import { getExperience, updateExperienceProfile } from "@/lib/db";
 import { getBusinessProfile, exaConfigured } from "@/lib/exa";
 import ExperienceClient from "@/components/ExperienceClient";
+import PipecatDemo from "@/components/PipecatDemo";
 
 export const dynamic = "force-dynamic";
+
+// India uses our own native-Telugu Pipecat + Sarvam agent when it's configured;
+// everyone else (and India before the agent is live) uses the VAPI assistant.
+const VOICE_AGENT_URL = process.env.NEXT_PUBLIC_VOICE_AGENT_URL || "";
 
 export default async function ExperiencePage({ params }: { params: Promise<{ token: string }> }) {
   const { token } = await params;
@@ -34,6 +39,17 @@ export default async function ExperiencePage({ params }: { params: Promise<{ tok
       profile = result.profile;
       await updateExperienceProfile(token, profile);
     }
+  }
+
+  const isIndia = (exp.country || "").toUpperCase() === "IN";
+  if (isIndia && VOICE_AGENT_URL) {
+    return (
+      <PipecatDemo
+        token={token}
+        businessName={exp.business_name || ""}
+        country={exp.country || ""}
+      />
+    );
   }
 
   return (
