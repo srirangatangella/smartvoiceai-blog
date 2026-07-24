@@ -13,6 +13,21 @@ import { SmallWebRTCTransport } from "@pipecat-ai/small-webrtc-transport";
 const AGENT_URL = (process.env.NEXT_PUBLIC_VOICE_AGENT_URL || "").replace(/\/$/, "");
 const MAX_SECONDS = 120;
 
+// ICE servers for the browser. STUN alone fails behind stricter NATs — the
+// browser also needs the TURN relay so media works from any network.
+function iceServers(): RTCIceServer[] {
+  const list: RTCIceServer[] = [{ urls: "stun:stun.l.google.com:19302" }];
+  const turnUrl = process.env.NEXT_PUBLIC_TURN_URL;
+  if (turnUrl) {
+    list.push({
+      urls: turnUrl,
+      username: process.env.NEXT_PUBLIC_TURN_USER || "",
+      credential: process.env.NEXT_PUBLIC_TURN_PASS || "",
+    });
+  }
+  return list;
+}
+
 function fmt(s: number) {
   const m = Math.floor(s / 60);
   const r = s % 60;
@@ -66,7 +81,7 @@ export default function PipecatDemo({
 
     const client = new PipecatClient({
       transport: new SmallWebRTCTransport({
-        iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
+        iceServers: iceServers(),
       }),
       enableCam: false,
       enableMic: true,

@@ -220,7 +220,21 @@
       "Bash(python -m py_compile bot_core.py server.py)",
       "Bash(git -c user.name=\"Sriranga Tangella\" -c user.email=\"srirangasai.tangella@gmail.com\" add -A)",
       "Bash(git -c 'user.name=Sriranga Tangella' -c user.email=srirangasai.tangella@gmail.com commit -qm ' *)",
-      "Bash(echo \"--- tsc exit: $? ---\")"
+      "Bash(echo \"--- tsc exit: $? ---\")",
+      "Bash(node -e \"console.log\\(require\\('crypto'\\).randomBytes\\(24\\).toString\\('hex'\\)\\)\")",
+      "Bash(git -c 'user.name=Sriranga Tangella' -c user.email=srirangasai.tangella@gmail.com commit -qam 'Fix .env.example TURN_URL host: bridge -> agent \\(match DEPLOY.md\\) *)",
+      "Bash(curl -s -m 15 https://agent.smartvoiceai.in/health -w \"\\\\nHTTP %{http_code}\\\\n\")",
+      "Bash(curl -sL \"https://raw.githubusercontent.com/pipecat-ai/pipecat/v1.6.0/src/pipecat/transports/smallwebrtc/request_handler.py\" -o rh.py)",
+      "Bash(curl -s \"https://raw.githubusercontent.com/pipecat-ai/pipecat/v1.6.0/src/pipecat/audio/vad/silero.py\")",
+      "Bash(curl -s \"https://raw.githubusercontent.com/pipecat-ai/pipecat/v1.6.0/src/pipecat/audio/vad/vad_analyzer.py\")",
+      "Bash(curl -s \"https://raw.githubusercontent.com/pipecat-ai/pipecat/v1.6.0/src/pipecat/transports/base_transport.py\")",
+      "Bash(curl -s \"https://raw.githubusercontent.com/pipecat-ai/pipecat/v1.6.0/src/pipecat/processors/aggregators/llm_response_universal.py\")",
+      "Bash(curl -sL \"https://docs.pipecat.ai/server/services/tts/how-to/set-buffer-size-to-start-processing.md\")",
+      "Bash(curl -sL \"https://docs.pipecat.ai/server/services/tts/how-to/set-maximum-length-for-sentence-splitting.md\")",
+      "Bash(curl -sL \"https://raw.githubusercontent.com/pipecat-ai/pipecat/v1.6.0/src/pipecat/services/sarvam/tts.py\")",
+      "Bash(curl -sL \"https://raw.githubusercontent.com/pipecat-ai/pipecat/v1.6.0/src/pipecat/frames/frames.py\")",
+      "Bash(curl -sL \"https://raw.githubusercontent.com/pipecat-ai/pipecat-quickstart/main/bot.py\")",
+      "Bash(curl -sL \"https://docs.pipecat.ai/server/frameworks/rtvi/rtvi-processor.md\" -o rtvi.md)"
     ]
   }
 }
