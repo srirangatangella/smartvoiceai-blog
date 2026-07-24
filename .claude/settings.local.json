@@ -243,7 +243,10 @@
       "Bash(grep -oiE \"\\(₹|\\\\\\\\$|Rs\\\\.?\\)[ ]?[0-9][0-9,]*|per month|/mo|setup|plan|tier|starter|growth|pro|enterprise|custom\" \"app/\\(site\\)/pricing/page.tsx\")",
       "Bash(grep -iE \"name:|price:|<h[1-3]|title|tagline|>[A-Z][a-z].{15,90}<\" \"app/\\(site\\)/pricing/page.tsx\")",
       "Bash(grep -iE \"name:|price:|features|\\\\\"[A-Z].{10,90}\\\\\"|q:|a:|question|answer\")",
-      "Bash(python -m py_compile bot_core.py)"
+      "Bash(python -m py_compile bot_core.py)",
+      "Bash(grep -rhoiE \"title:[[:space:]]*[\\\\\"'][^\\\\\"']+[\\\\\"']|heading[^>]*>[^<]{4,60}<|name:[[:space:]]*[\\\\\"'][A-Z][^\\\\\"']{3,40}[\\\\\"']\" components/ServicesGrid.tsx \"app/\\(site\\)/page.tsx\")",
+      "Bash(grep -rhoE \">[A-Z][A-Za-z ]{4,40}<\" \"app/\\(site\\)/page.tsx\")",
+      "Bash(git -c 'user.name=Sriranga Tangella' -c user.email=srirangasai.tangella@gmail.com commit -qam 'Site persona: add website building + no-website sales angle *)"
     ]
   }
 }
