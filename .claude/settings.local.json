@@ -234,7 +234,16 @@
       "Bash(curl -sL \"https://raw.githubusercontent.com/pipecat-ai/pipecat/v1.6.0/src/pipecat/services/sarvam/tts.py\")",
       "Bash(curl -sL \"https://raw.githubusercontent.com/pipecat-ai/pipecat/v1.6.0/src/pipecat/frames/frames.py\")",
       "Bash(curl -sL \"https://raw.githubusercontent.com/pipecat-ai/pipecat-quickstart/main/bot.py\")",
-      "Bash(curl -sL \"https://docs.pipecat.ai/server/frameworks/rtvi/rtvi-processor.md\" -o rtvi.md)"
+      "Bash(curl -sL \"https://docs.pipecat.ai/server/frameworks/rtvi/rtvi-processor.md\" -o rtvi.md)",
+      "Bash(curl -sL \"https://raw.githubusercontent.com/pipecat-ai/pipecat/v1.6.0/src/pipecat/services/sarvam/tts.py\" -o stts.py)",
+      "Bash(curl -sL \"https://raw.githubusercontent.com/pipecat-ai/pipecat/v1.6.0/src/pipecat/services/sarvam/llm.py\")",
+      "Bash(curl -sL \"https://raw.githubusercontent.com/pipecat-ai/pipecat/v1.6.0/src/pipecat/services/google/llm.py\")",
+      "Bash(curl -sL \"https://docs.pipecat.ai/server/services/llm/gemini.md\")",
+      "Bash(curl -sL \"https://docs.sarvam.ai/api/getting-started/pricing.md\")",
+      "Bash(grep -oiE \"\\(₹|\\\\\\\\$|Rs\\\\.?\\)[ ]?[0-9][0-9,]*|per month|/mo|setup|plan|tier|starter|growth|pro|enterprise|custom\" \"app/\\(site\\)/pricing/page.tsx\")",
+      "Bash(grep -iE \"name:|price:|<h[1-3]|title|tagline|>[A-Z][a-z].{15,90}<\" \"app/\\(site\\)/pricing/page.tsx\")",
+      "Bash(grep -iE \"name:|price:|features|\\\\\"[A-Z].{10,90}\\\\\"|q:|a:|question|answer\")",
+      "Bash(python -m py_compile bot_core.py)"
     ]
   }
 }
